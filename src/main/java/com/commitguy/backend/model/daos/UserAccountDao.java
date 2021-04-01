@@ -1,6 +1,6 @@
-package com.commitguy.backend.daos;
+package com.commitguy.backend.model.daos;
 
-import com.commitguy.backend.entities.UserAccount;
+import com.commitguy.backend.model.entities.UserAccount;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.Optional;

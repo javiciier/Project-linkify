@@ -1,10 +1,10 @@
-package com.commitguy.backend.services;
+package com.commitguy.backend.model.services;
 
-import com.commitguy.backend.entities.User;
-import com.commitguy.backend.entities.UserAccount;
-import com.commitguy.backend.exceptions.AccountNotFromUserException;
-import com.commitguy.backend.exceptions.NonExistentUserAccountException;
-import com.commitguy.backend.exceptions.NonExistentUserException;
+import com.commitguy.backend.model.entities.User;
+import com.commitguy.backend.model.entities.UserAccount;
+import com.commitguy.backend.model.exceptions.AccountNotFromUserException;
+import com.commitguy.backend.model.exceptions.NonExistentUserAccountException;
+import com.commitguy.backend.model.exceptions.NonExistentUserException;
 
 /**
  * Clase auxiliar que comprueba si la información de los usuarios y sus cuentas son correctos.

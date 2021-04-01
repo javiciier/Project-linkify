@@ -1,4 +1,4 @@
-package com.commitguy.backend.exceptions;
+package com.commitguy.backend.model.exceptions;
 
 /**
  * Excepción ejecutada cuando no existe el usuario

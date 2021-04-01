@@ -1,9 +1,9 @@
-package com.commitguy.backend.services;
+package com.commitguy.backend.model.services;
 
-import com.commitguy.backend.daos.UserDao;
-import com.commitguy.backend.entities.User;
+import com.commitguy.backend.model.daos.UserDao;
+import com.commitguy.backend.model.entities.User;
 
-import com.commitguy.backend.exceptions.NonExistentUserException;
+import com.commitguy.backend.model.exceptions.NonExistentUserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

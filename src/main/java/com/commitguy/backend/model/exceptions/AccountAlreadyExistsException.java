@@ -1,4 +1,4 @@
-package com.commitguy.backend.exceptions;
+package com.commitguy.backend.model.exceptions;
 
 public class AccountAlreadyExistsException extends Exception{
     public AccountAlreadyExistsException() {

@@ -1,4 +1,4 @@
-package com.commitguy.backend.exceptions;
+package com.commitguy.backend.model.exceptions;
 
 public class NonExistentUserAccountException extends Exception {
     public NonExistentUserAccountException() {

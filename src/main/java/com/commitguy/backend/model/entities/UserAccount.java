@@ -1,4 +1,4 @@
-package com.commitguy.backend.entities;
+package com.commitguy.backend.model.entities;
 
 import javax.persistence.*;
 

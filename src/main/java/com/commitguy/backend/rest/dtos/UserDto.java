@@ -1,12 +1,10 @@
-package com.commitguy.backend.entities;
+package com.commitguy.backend.rest.dtos;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-@Entity
-public class User {
+public class UserDto {
     private Long id;
     private String name;
     private String surname1;
@@ -14,9 +12,10 @@ public class User {
     private String email;
     private byte[] image;
 
-    public User() {};
+    public UserDto() {};
 
-    public User(String name, String surname1, String surname2, String email, byte[] image) {
+    public UserDto(Long id, String name, String surname1, String surname2, String email, byte[] image) {
+        this.id = id;
         this.name = name;
         this.surname1 = surname1;
         this.surname2 = surname2;
@@ -24,9 +23,6 @@ public class User {
         this.image = image;
     }
 
-    /* Propiedades de la entidad: atributos con sus métodos getter y setter */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
@@ -35,6 +31,8 @@ public class User {
         this.id = id;
     }
 
+    @NotNull
+    @Size(min = 1, max = 50)
     public String getName() {
         return name;
     }
@@ -43,6 +41,8 @@ public class User {
         this.name = name;
     }
 
+    @NotNull
+    @Size(min = 1, max = 50)
     public String getSurname1() {
         return surname1;
     }
@@ -51,6 +51,7 @@ public class User {
         this.surname1 = surname1;
     }
 
+    @Size(min = 1, max = 50)
     public String getSurname2() {
         return surname2;
     }
@@ -59,6 +60,8 @@ public class User {
         this.surname2 = surname2;
     }
 
+    @NotNull
+    @Size(min = 1, max = 60)
     public String getEmail() {
         return email;
     }

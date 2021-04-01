@@ -1,4 +1,4 @@
-package com.commitguy.backend.exceptions;
+package com.commitguy.backend.model.exceptions;
 
 /**
  * Exepción ejecutada cuando la cuenta de usuario no se corresponde con su usuario propietario.

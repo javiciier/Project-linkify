@@ -1,7 +1,7 @@
-package com.commitguy.backend.services;
+package com.commitguy.backend.model.services;
 
-import com.commitguy.backend.entities.User;
-import com.commitguy.backend.exceptions.NonExistentUserException;
+import com.commitguy.backend.model.entities.User;
+import com.commitguy.backend.model.exceptions.NonExistentUserException;
 
 public interface UserService {
     /**

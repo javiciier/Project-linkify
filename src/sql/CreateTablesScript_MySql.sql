@@ -9,9 +9,9 @@ DROP TABLE User;
 CREATE TABLE User (
     id              BIGINT NOT NULL AUTO_INCREMENT,
     name            VARCHAR(50) NOT NULL,       /* Nombre */
-    surname1        VARCHAR(50),                /* Primer apellido */
+    surname1        VARCHAR(50) NOT NULL,       /* Primer apellido */
     surname2        VARCHAR(50),                /* Segundo apellido */
-    email           VARCHAR(60),
+    email           VARCHAR(60) NOT NULL,
     image           LONGBLOB,
 
     CONSTRAINT User_PK PRIMARY KEY (id)

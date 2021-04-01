@@ -1,12 +1,12 @@
-package com.commitguy.backend.services;
+package com.commitguy.backend.model.services;
 
-import com.commitguy.backend.daos.UserAccountDao;
-import com.commitguy.backend.daos.UserDao;
-import com.commitguy.backend.entities.User;
-import com.commitguy.backend.entities.UserAccount;
-import com.commitguy.backend.exceptions.AccountAlreadyExistsException;
-import com.commitguy.backend.exceptions.IncorrectLoginException;
-import com.commitguy.backend.exceptions.NonExistentUserAccountException;
+import com.commitguy.backend.model.daos.UserAccountDao;
+import com.commitguy.backend.model.daos.UserDao;
+import com.commitguy.backend.model.entities.User;
+import com.commitguy.backend.model.entities.UserAccount;
+import com.commitguy.backend.model.exceptions.AccountAlreadyExistsException;
+import com.commitguy.backend.model.exceptions.IncorrectLoginException;
+import com.commitguy.backend.model.exceptions.NonExistentUserAccountException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
