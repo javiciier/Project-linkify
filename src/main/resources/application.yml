@@ -23,3 +23,8 @@ spring:
       ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+project:
+  jwtSession:
+    expirationInMinutes: 1440   # Minutos en 1 día
+    signKey: Bu:GW8bgPlEw
