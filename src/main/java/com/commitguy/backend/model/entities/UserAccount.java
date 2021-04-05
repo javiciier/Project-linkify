@@ -11,9 +11,10 @@ public class UserAccount {
 
     public UserAccount() {};
 
-    public UserAccount(String nickName, String password) {
+    public UserAccount(String nickName, String password, User user) {
         this.nickName = nickName;
         this.password = password;
+        this.user = user;
     }
 
     /* Propiedades de la entidad: atributos con sus métodos getter y setter */
