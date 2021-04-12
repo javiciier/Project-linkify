@@ -3,7 +3,6 @@ package com.commitguy.backend.model.services;
 import com.commitguy.backend.model.daos.UserDao;
 import com.commitguy.backend.model.entities.User;
 
-import com.commitguy.backend.model.entities.UserAccount;
 import com.commitguy.backend.model.exceptions.UserAlreadyExistsException;
 import com.commitguy.backend.model.exceptions.IncorrectLoginException;
 import com.commitguy.backend.model.exceptions.NonExistentUserException;
@@ -89,7 +88,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User changePassword(Long userId, String oldPassword, String newPassword) throws NonExistentUserException, IncorrectLoginException {
+    public void changePassword(Long userId, String oldPassword, String newPassword) throws NonExistentUserException, IncorrectLoginException {
         // Buscar el usuario en la BBDD
         User user = permissionChecker.fetchUser(userId);
 
@@ -101,7 +100,5 @@ public class UserServiceImpl implements UserService {
         String newCypheredPassword = passwordEncoder.encode(newPassword);
         user.setPassword(newCypheredPassword);
         User updatedUser = userDao.save(user);
-
-        return updatedUser;
     }
 }

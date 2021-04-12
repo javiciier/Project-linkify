@@ -1,6 +1,7 @@
 package com.commitguy.backend.rest.dtos.conversors;
 
 import com.commitguy.backend.model.entities.User;
+import com.commitguy.backend.rest.dtos.AuthenticatedUserDto;
 import com.commitguy.backend.rest.dtos.UserDto;
 
 public class UserDtoConversor {
@@ -16,6 +17,10 @@ public class UserDtoConversor {
                 user.getImage());
 
         return dto;
+    }
+
+    public static final AuthenticatedUserDto toAuthenticatedUserDto(User user, String token) {
+        return new AuthenticatedUserDto(token, toUserDto(user));
     }
 
     public static final User toUser(UserDto dto) {

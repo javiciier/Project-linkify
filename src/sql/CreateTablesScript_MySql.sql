@@ -13,19 +13,10 @@ CREATE TABLE User (
     surname2        VARCHAR(50),                /* Segundo apellido */
     email           VARCHAR(60) NOT NULL,
     image           LONGBLOB,
-
-    CONSTRAINT User_PK PRIMARY KEY (id)
-) ENGINE = InnoDB;
-
-
-CREATE TABLE UserAccount (
-    accountId       BIGINT NOT NULL AUTO_INCREMENT,
     nickName        VARCHAR(60) NOT NULL,           /* Nombre de usuario */
     password        VARCHAR(60) NOT NULL,           /* Contraseña */
-    user            BIGINT NOT NULL,                /* Usuario al que pertenece la cuenta*/
 
-    CONSTRAINT UserAccount_PK PRIMARY KEY (accountId),
-    CONSTRAINT UserAccount_TO_User_FK FOREIGN KEY (user) REFERENCES User(id) ON DELETE CASCADE
+    CONSTRAINT User_PK PRIMARY KEY (id)
 ) ENGINE = InnoDB;
 
 

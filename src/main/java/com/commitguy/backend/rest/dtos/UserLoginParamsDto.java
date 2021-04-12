@@ -25,7 +25,7 @@ public class UserLoginParamsDto {
     }
 
     public void setNickName(String nickName) {
-        this.nickName = nickName;
+        this.nickName = nickName.trim();
     }
 
     @NotNull

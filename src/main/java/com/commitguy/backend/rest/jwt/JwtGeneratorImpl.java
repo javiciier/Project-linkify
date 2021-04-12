@@ -23,6 +23,7 @@ public class JwtGeneratorImpl implements JwtGenerator {
         Date expirationDate = new Date(expirationDateInMiliseconds);
         String jwt = Jwts.builder()
                 .claim("userId",info.getUserId())
+                .claim("nickName", info.getNickName())
                 .setExpiration(expirationDate)
                 .signWith(SignatureAlgorithm.HS512, signKey)
                 .compact();
@@ -40,7 +41,8 @@ public class JwtGeneratorImpl implements JwtGenerator {
 
         // Parsear datos
         Long userId = (Long) claims.get("userId");
+        String nickName = (String) claims.get("nickName");
 
-        return new JwtInfo(userId);
+        return new JwtInfo(userId, nickName);
     }
 }

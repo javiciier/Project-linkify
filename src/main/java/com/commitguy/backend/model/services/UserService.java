@@ -17,10 +17,9 @@ public interface UserService {
     public User updateProfile(User newUser) throws NonExistentUserException, PermissionException;
 
     /**
-     * Crea una cuenta <code>account</code> y se la asigna al usuario <code>newUser</code>
-     * @param account Datos de la nueva cuenta
+     * Crea una cuenta para el usuario
      * @param newUser Datos del nuevo usuario
-     * @throws UserAlreadyExistsException La cuenta a crear ya existe
+     * @throws UserAlreadyExistsException El usuario a registrar ya existe
      */
     void signUp(User newUser) throws UserAlreadyExistsException;
 
@@ -29,26 +28,26 @@ public interface UserService {
      * @param nickName Nombre de usuario
      * @param password Contraseña
      * @return EL usuario asociado a la cuenta
-     * @throws NonExistentUserAccountException No existe la cuenta introducida
      * @throws IncorrectLoginException Error introduciendo los datos de acceso
      */
     User login(String nickName, String password) throws IncorrectLoginException;
 
     /**
      * Inicia sesión en la aplicación a partir del ID del usuario.
-     * @param accountId ID del usuario
+     * @param userId ID del usuario
      * @return El usuario asociado a la cuenta
-     * @throws NonExistentUserAccountException No existe la cuenta del usuario
+     * @throws NonExistentUserException No existe el usuario
      */
     User loginFromId(Long userId) throws NonExistentUserException;
 
     /**
      * Cambia la contraseña de una cuenta.
-     * @param userId ID de la cuenta a modificar
+     * @param userId ID del usuario a modificar
      * @param oldPassword Antigua contraseña
      * @param newPassword Nueva contraseña
-     * @return La cuenta de usuario con la nueva contraseña actualizada
+     * @throws NonExistentUserException El usuario no existe
+     * @throws IncorrectLoginException Error introduciendo los datos de acceso
      */
-    User changePassword(Long userId, String oldPassword, String newPassword) throws NonExistentUserException, IncorrectLoginException;
+    void changePassword(Long userId, String oldPassword, String newPassword) throws NonExistentUserException, IncorrectLoginException;
 
 }

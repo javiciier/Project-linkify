@@ -28,8 +28,12 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilter(authenticationFilter).authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/users/signUp").permitAll()
+                // User controller endpoints
                 .antMatchers(HttpMethod.POST, "/users/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/users/loginUsingToken").permitAll()
+                .antMatchers(HttpMethod.POST, "/users/signUp").permitAll()
+                .antMatchers(HttpMethod.POST, "/users/{userId}/changePassword").permitAll()
+                .antMatchers(HttpMethod.PUT, "/users/{userId}/updateProfile").permitAll()
                 .anyRequest().denyAll();
 
     }

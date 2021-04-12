@@ -5,9 +5,11 @@ package com.commitguy.backend.rest.jwt;
  */
 public class JwtInfo {
     private Long userId;
+    private String nickName;
 
-    public JwtInfo(Long userId) {
+    public JwtInfo(Long userId, String nickName) {
         this.userId = userId;
+        this.nickName = nickName;
     }
 
     public Long getUserId() {
@@ -16,5 +18,13 @@ public class JwtInfo {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 }

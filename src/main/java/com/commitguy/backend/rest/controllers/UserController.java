@@ -1,16 +1,25 @@
 package com.commitguy.backend.rest.controllers;
 
 import com.commitguy.backend.model.entities.User;
+import com.commitguy.backend.model.exceptions.IncorrectLoginException;
 import com.commitguy.backend.model.exceptions.NonExistentUserException;
+import com.commitguy.backend.model.exceptions.UserAlreadyExistsException;
 import com.commitguy.backend.model.exceptions.common.PermissionException;
 import com.commitguy.backend.model.services.UserService;
-import com.commitguy.backend.rest.dtos.ErrorDto;
-import com.commitguy.backend.rest.dtos.UserDto;
+import com.commitguy.backend.model.services.UserServiceImpl;
+import com.commitguy.backend.rest.dtos.*;
 import com.commitguy.backend.rest.dtos.conversors.UserDtoConversor;
+import com.commitguy.backend.rest.jwt.JwtGenerator;
+import com.commitguy.backend.rest.jwt.JwtInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/users")
@@ -18,11 +27,27 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    JwtGenerator jwtGenerator;
+
 
     /* ***************************** EXCEPTION HANDLERS ***************************** */
     @ExceptionHandler(value = NonExistentUserException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ErrorDto handleNonExistentUserException(NonExistentUserException exc) {
+        return new ErrorDto(exc.getMessage());
+    }
+
+
+    @ExceptionHandler(value = UserAlreadyExistsException.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ErrorDto handleUserAlreadyExistsException(UserAlreadyExistsException exc) {
+        return new ErrorDto(exc.getMessage());
+    }
+
+    @ExceptionHandler(value = IncorrectLoginException.class)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public ErrorDto handleIncorrectLoginException(IncorrectLoginException exc) {
         return new ErrorDto(exc.getMessage());
     }
 
@@ -35,7 +60,7 @@ public class UserController {
      * @param userDto Datos del nuevo usuario
      * @return El usuario con los nuevos datos
      */
-    @PostMapping("/{userId}/updateProfile")
+    @PutMapping("/{userId}/updateProfile")
     public UserDto updateProfile(@RequestAttribute Long id,
                               @PathVariable Long userId,
                               @Validated @RequestBody UserDto userDto) throws PermissionException, NonExistentUserException {
@@ -56,5 +81,82 @@ public class UserController {
     }
 
 
+    /**
+     * Crea una cuenta para el usuario
+     * @param userDto Datos del nuevo usuario
+     * @throws UserAlreadyExistsException El usuario a registrar ya existe
+     */
+    @PostMapping("/signUp")
+    public ResponseEntity<AuthenticatedUserDto> signUp(@RequestBody UserDto userDto) throws UserAlreadyExistsException {
+        // Parsea los datos del usuario y lo registra
+        User user = UserDtoConversor.toUser(userDto);
+        userService.signUp(user);
+        String userToken = generateUserToken(user);
+
+
+        // Crea la URI de su perfil una vez se registre
+        URI redirectLocation = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{userId}")
+                .buildAndExpand(user.getId())
+                .toUri();
+
+        // Devuelve los datos al usuario y le redirige a su perfil
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .location(redirectLocation)
+                .body(UserDtoConversor.toAuthenticatedUserDto(user,userToken));
+
+    }
+
+
+    @PostMapping("/login")
+    public AuthenticatedUserDto login(@RequestBody UserLoginParamsDto params) throws IncorrectLoginException {
+        // Intenta iniciar sesión con el usuario recibido
+        User user = userService.login(params.getNickName(), params.getPassword());
+
+        // Genera un JWT para que el usuario mantenta sesión iniciada
+        String userToken = generateUserToken(user);
+
+        return UserDtoConversor.toAuthenticatedUserDto(user, userToken);
+    }
+
+
+    /**
+     * Inicia sesión en la aplicación a partir del ID del usuario.
+     * @param userId ID del usuario
+     * @param userToken JWT del usuario
+     * @return El usuario asociado a la cuenta
+     * @throws NonExistentUserException No existe el usuario
+     */
+    @PostMapping("/loginUsingToken")
+    public AuthenticatedUserDto loginFromId(@RequestAttribute Long userId,
+                                            @RequestAttribute String userToken) throws NonExistentUserException {
+        // Busca el usuario por su id
+        User user = userService.loginFromId(userId);
+
+        return UserDtoConversor.toAuthenticatedUserDto(user, userToken);
+    }
+
+
+    @PostMapping("/{userId}/changePassword")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void changePassword(@RequestAttribute Long id,
+                               @PathVariable Long userId,
+                               @RequestBody ChangePasswordParamsDto params)
+            throws NonExistentUserException, IncorrectLoginException, PermissionException {
+        if (!id.equals(userId)) {
+            throw new PermissionException();
+        }
+
+        userService.changePassword(id, params.getOldPassword(), params.getNewPassword());
+    }
+
+
     /* ***************************** AUXILIAR FUNCTIONS ***************************** */
+    private String generateUserToken(User user) {
+        JwtInfo jwt = new JwtInfo(user.getId(), user.getNickName());
+
+        return jwtGenerator.generateJWT(jwt);
+    }
 }
