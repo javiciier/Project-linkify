@@ -16,6 +16,8 @@ public interface UserDao extends PagingAndSortingRepository<User, Long> {
 
     public Optional<User> findByEmail(String email);
 
+    public Optional<User> findByNickName(String nickName);
+
     public Optional<User> removeById(Long id);
 
 }

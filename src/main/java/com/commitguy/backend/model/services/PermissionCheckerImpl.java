@@ -1,11 +1,8 @@
 package com.commitguy.backend.model.services;
 
-import com.commitguy.backend.model.daos.UserAccountDao;
 import com.commitguy.backend.model.daos.UserDao;
 import com.commitguy.backend.model.entities.User;
 import com.commitguy.backend.model.entities.UserAccount;
-import com.commitguy.backend.model.exceptions.AccountNotFromUserException;
-import com.commitguy.backend.model.exceptions.NonExistentUserAccountException;
 import com.commitguy.backend.model.exceptions.NonExistentUserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,10 +15,6 @@ import java.util.Optional;
 public class PermissionCheckerImpl implements PermissionChecker {
     @Autowired
     private UserDao userDao;
-
-    @Autowired
-    private UserAccountDao userAccountDao;
-
 
 
     @Override
@@ -42,34 +35,4 @@ public class PermissionCheckerImpl implements PermissionChecker {
     }
 
 
-    @Override
-    public void checkUserAccountExists(Long userAccountId) throws NonExistentUserAccountException {
-        if (!userAccountDao.existsByAccountId(userAccountId))
-            throw new NonExistentUserAccountException();
-    }
-
-
-    @Override
-    public UserAccount fetchUserAccount(Long userAccountId) throws NonExistentUserAccountException {
-        Optional<UserAccount> account = userAccountDao.findById(userAccountId);
-
-        if (!account.isPresent())
-            throw new NonExistentUserAccountException();
-
-        return account.get();
-    }
-
-
-    @Override
-    public void checkUserAccountBelongsToUser(Long userId, Long userAccountId)
-            throws NonExistentUserException, NonExistentUserAccountException, AccountNotFromUserException {
-        // Obtener el usuario y la cuenta
-        User user = fetchUser(userId);
-        UserAccount account = fetchUserAccount(userAccountId);
-
-        // Comprobar si propietario de la cuenta es el usuario recibido
-        if (!account.getUser().getId().equals(userId))
-            throw new AccountNotFromUserException();
-
-    }
 }

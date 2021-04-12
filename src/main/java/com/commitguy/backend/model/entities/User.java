@@ -13,8 +13,10 @@ public class User {
     private String surname2;
     private String email;
     private byte[] image;
+    private String nickName;
+    private String password;
 
-    public User() {};
+    public User() {}
 
     public User(String name, String surname1, String surname2, String email, byte[] image) {
         this.name = name;
@@ -73,5 +75,21 @@ public class User {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
