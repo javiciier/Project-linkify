@@ -5,14 +5,14 @@ import com.commitguy.backend.model.entities.User;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class UserAccountLoginParamsDto {
+public class UserLoginParamsDto {
     private String nickName;
     private String password;
 
 
-    public UserAccountLoginParamsDto() {}
+    public UserLoginParamsDto() {}
 
-    public UserAccountLoginParamsDto(String nickName, String password) {
+    public UserLoginParamsDto(String nickName, String password) {
         this.nickName = nickName;
         this.password = password;
     }

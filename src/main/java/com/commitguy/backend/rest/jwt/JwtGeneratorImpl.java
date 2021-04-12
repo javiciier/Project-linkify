@@ -22,9 +22,7 @@ public class JwtGeneratorImpl implements JwtGenerator {
         long expirationDateInMiliseconds = System.currentTimeMillis() + expirationInMinutes*60*1000;
         Date expirationDate = new Date(expirationDateInMiliseconds);
         String jwt = Jwts.builder()
-                .claim("accountId", info.getAccountId())
                 .claim("userId",info.getUserId())
-                .claim("nickName",  info.getNickName())
                 .setExpiration(expirationDate)
                 .signWith(SignatureAlgorithm.HS512, signKey)
                 .compact();
@@ -41,10 +39,8 @@ public class JwtGeneratorImpl implements JwtGenerator {
                 .getBody();
 
         // Parsear datos
-        Long accountId = (Long) claims.get("accountId");
         Long userId = (Long) claims.get("userId");
-        String nickName = (String) claims.get("nickName");
 
-        return new JwtInfo(accountId, nickName, userId);
+        return new JwtInfo(userId);
     }
 }

@@ -41,6 +41,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);           // COnfigura Spring con los datos recibidos
     }
 
+
     /* Extrae los datos de acceso del JWT */
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest req) {
         String token = req.getHeader(HttpHeaders.AUTHORIZATION);
