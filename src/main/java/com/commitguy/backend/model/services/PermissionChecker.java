@@ -1,7 +1,6 @@
 package com.commitguy.backend.model.services;
 
 import com.commitguy.backend.model.entities.User;
-import com.commitguy.backend.model.entities.UserAccount;
 import com.commitguy.backend.model.exceptions.NonExistentUserException;
 
 /**

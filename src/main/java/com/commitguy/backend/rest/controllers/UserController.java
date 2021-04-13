@@ -73,6 +73,8 @@ public class UserController {
                 userDto.getName(),
                 userDto.getSurname1(),
                 userDto.getSurname2(),
+                userDto.getPassword(),
+                userDto.getNickName(),
                 userDto.getEmail(),
                 userDto.getImage());
         updatedUser = userService.updateProfile(updatedUser);
@@ -87,7 +89,7 @@ public class UserController {
      * @throws UserAlreadyExistsException El usuario a registrar ya existe
      */
     @PostMapping("/signUp")
-    public ResponseEntity<AuthenticatedUserDto> signUp(@RequestBody UserDto userDto) throws UserAlreadyExistsException {
+    public ResponseEntity<AuthenticatedUserDto> signUp(@Validated @RequestBody UserDto userDto) throws UserAlreadyExistsException {
         // Parsea los datos del usuario y lo registra
         User user = UserDtoConversor.toUser(userDto);
         userService.signUp(user);
@@ -132,9 +134,11 @@ public class UserController {
     @PostMapping("/loginUsingToken")
     public AuthenticatedUserDto loginFromId(@RequestAttribute Long userId,
                                             @RequestAttribute String userToken) throws NonExistentUserException {
+        System.out.println("UserId: " + userId);
+        System.out.println("UserToken: " + userToken);
         // Busca el usuario por su id
         User user = userService.loginFromId(userId);
-
+        System.out.println(user.toString());
         return UserDtoConversor.toAuthenticatedUserDto(user, userToken);
     }
 

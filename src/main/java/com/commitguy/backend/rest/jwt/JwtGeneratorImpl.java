@@ -40,7 +40,7 @@ public class JwtGeneratorImpl implements JwtGenerator {
                 .getBody();
 
         // Parsear datos
-        Long userId = (Long) claims.get("userId");
+        Long userId = ((Integer) claims.get("userId")).longValue();
         String nickName = (String) claims.get("nickName");
 
         return new JwtInfo(userId, nickName);

@@ -52,16 +52,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public void signUp(User newUser) throws UserAlreadyExistsException {
         // Comprobar si existe una cuenta con las mismas credenciales
-        if (userDao.existsByName(newUser.getNickName()))
-            throw new UserAlreadyExistsException(newUser.getNickName());
+        if (userDao.existsByNickName(newUser.getNickName()))
+            throw new UserAlreadyExistsException("Usuario '" + newUser.getNickName() + "' ya existe");
 
-        // Cifrar la contraseña recibida
+        // Cifrar la contraseña recibida;
         String cypheredPassword = passwordEncoder.encode(newUser.getPassword());
         newUser.setPassword(cypheredPassword);
 
         // Guardar el usuario en la BBDD
         userDao.save(newUser);
-        System.out.println("Created new user: " + newUser.getNickName());
+        System.out.println("Creado nuevo usuario " + newUser.getNickName());
     }
 
 

@@ -1,6 +1,5 @@
 /* ELIMINACIÓN DE TABLAS, ÍNDICES Y RESTRICCIONES */
 /* Recordar eliminar las tablas en el orden inverso en el que se crean */
-DROP TABLE UserAccount;
 DROP TABLE User;
 
 
@@ -22,7 +21,4 @@ CREATE TABLE User (
 
 
 /* GENERACIÓN DE ÍNDICES */
-/*
 CREATE INDEX User_id_INDEX ON User(id);
-CREATE INDEX UserAccount_nickName_INDEX ON UserAccount(nickName);
-*/

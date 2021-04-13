@@ -18,10 +18,12 @@ public class User {
 
     public User() {}
 
-    public User(String name, String surname1, String surname2, String email, byte[] image) {
+    public User(String name, String surname1, String surname2, String password, String nickName, String email, byte[] image) {
         this.name = name;
         this.surname1 = surname1;
         this.surname2 = surname2;
+        this.password = password;
+        this.nickName = nickName;
         this.email = email;
         this.image = image;
     }
@@ -91,5 +93,18 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+
+    @Override
+    public String toString() {
+        return "USER: "
+                + "id: " + this.id + " "
+                + "name: " + this.name + " "
+                + "surname1: " + this.surname1 + " "
+                + "surname2: " + this.surname2 + " "
+                + "email: " + this.email + " "
+                + "nickName: " + this.nickName + " "
+                + "password: " + this.password;
     }
 }

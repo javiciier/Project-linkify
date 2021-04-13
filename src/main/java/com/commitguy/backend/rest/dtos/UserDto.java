@@ -9,16 +9,20 @@ public class UserDto {
     private String name;
     private String surname1;
     private String surname2;
+    private String password;
+    private String nickName;
     private String email;
     private byte[] image;
 
     public UserDto() {};
 
-    public UserDto(Long id, String name, String surname1, String surname2, String email, byte[] image) {
+    public UserDto(Long id, String name, String surname1, String surname2, String password, String nickName, String email, byte[] image) {
         this.id = id;
         this.name = name;
         this.surname1 = surname1;
         this.surname2 = surname2;
+        this.password = password;
+        this.nickName = nickName;
         this.email = email;
         this.image = image;
     }
@@ -61,6 +65,26 @@ public class UserDto {
     }
 
     @NotNull
+    @Size(min = 1, max = 50)
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @NotNull
+    @Size(min = 1, max = 50)
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    @NotNull
     @Size(min = 1, max = 60)
     public String getEmail() {
         return email;
@@ -77,4 +101,5 @@ public class UserDto {
     public void setImage(byte[] image) {
         this.image = image;
     }
+
 }

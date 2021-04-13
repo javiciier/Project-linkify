@@ -6,13 +6,15 @@ import com.commitguy.backend.rest.dtos.UserDto;
 
 public class UserDtoConversor {
 
-    private UserDtoConversor() {};
+    private UserDtoConversor() {}
 
     public static final UserDto toUserDto(User user) {
         UserDto dto = new UserDto(user.getId(),
                 user.getName(),
                 user.getSurname1(),
                 user.getSurname2(),
+                user.getPassword(),
+                user.getNickName(),
                 user.getEmail(),
                 user.getImage());
 
@@ -27,6 +29,8 @@ public class UserDtoConversor {
         User user = new User(dto.getName(),
                 dto.getSurname1(),
                 dto.getSurname2(),
+                dto.getPassword(),
+                dto.getNickName(),
                 dto.getEmail(),
                 dto.getImage());
 

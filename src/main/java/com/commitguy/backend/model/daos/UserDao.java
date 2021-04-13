@@ -6,7 +6,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import java.util.Optional;
 
 public interface UserDao extends PagingAndSortingRepository<User, Long> {
-    public boolean existsByName(String name);
+    public boolean existsByNickName(String name);
 
     public Optional<User> findByName(String name);
 
