@@ -12,9 +12,8 @@ public interface UserService {
      * @param newUser Usuario con los nuevos datos a actualizar
      * @return El usuario con los nuevos datos
      * @throws NonExistentUserException El usuario a modificar no existe
-     * @throws PermissionException No se dispone de los permisos suficientes
      */
-    public User updateProfile(User newUser) throws NonExistentUserException, PermissionException;
+    User updateProfile(User newUser) throws NonExistentUserException;
 
     /**
      * Crea una cuenta para el usuario
@@ -30,7 +29,7 @@ public interface UserService {
      * @return EL usuario asociado a la cuenta
      * @throws IncorrectLoginException Error introduciendo los datos de acceso
      */
-    User login(String nickName, String password) throws IncorrectLoginException;
+    User login(String nickName, String password) throws IncorrectLoginException, NonExistentUserException;
 
     /**
      * Inicia sesión en la aplicación a partir del ID del usuario.

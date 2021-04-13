@@ -113,7 +113,7 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public AuthenticatedUserDto login(@RequestBody UserLoginParamsDto params) throws IncorrectLoginException {
+    public AuthenticatedUserDto login(@RequestBody UserLoginParamsDto params) throws IncorrectLoginException, NonExistentUserException {
         // Intenta iniciar sesión con el usuario recibido
         User user = userService.login(params.getNickName(), params.getPassword());
 

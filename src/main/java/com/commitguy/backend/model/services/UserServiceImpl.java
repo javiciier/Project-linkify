@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public User updateProfile(User newUser) throws NonExistentUserException, PermissionException {
+    public User updateProfile(User newUser) throws NonExistentUserException {
         User actualUser = permissionChecker.fetchUser(newUser.getId());
 
         if (newUser.getName() != null)
@@ -67,11 +67,11 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     @Override
-    public User login(String nickName, String password) throws IncorrectLoginException {
+    public User login(String nickName, String password) throws IncorrectLoginException, NonExistentUserException {
         // Buscar el usuario en la BBDD
         Optional<User> user = userDao.findByNickName(nickName);
         if (!user.isPresent())
-            throw new IncorrectLoginException("Usuario no encontrado");
+            throw new NonExistentUserException("Usuario no encontrado");
         User retrievedUser = user.get();
 
         // Comprobar si contraseñas coinciden
