@@ -4,7 +4,6 @@
   "description": "Gestor de enlaces web empleando Spring y ReactJS",
   "license": "MIT",
   "private": true,
-
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -13,7 +12,6 @@
     "lint": "eslint .",
     "fixlint": "eslint . --fix"
   },
-  
   "eslintConfig": {
     "extends": [
       "react-app"
@@ -32,11 +30,10 @@
       "last 1 edge version"
     ]
   },
-
   "devDependencies": {
-    "eslint-plugin-react": "7.23.2"
+    "eslint-plugin-react": "7.23.2",
+    "http-status-enum": "^1.0.2"
   },
-
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
