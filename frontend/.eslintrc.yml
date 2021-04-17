@@ -2,11 +2,11 @@ env:
   browser: true
   commonjs: true
   es2021: true
+  node: true
 
 settings:
   react:
     version: detect
-
 
 extends:
   - 'eslint:recommended'
@@ -25,17 +25,16 @@ plugins:
   - jest
 
 rules:
-  indent:
-    - 1
-    - 2
   linebreak-style:
     - error
     - unix
   quotes:
-    - error
+    - 1
     - single
   semi:
-    - error
-    - always
+    - 0
+    - never
   react/react-in-jsx-scope: 0
-  
+  no-unused-vars: 
+    - 1
+    - vars: local
