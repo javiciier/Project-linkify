@@ -1,2 +1,13 @@
+# Common
 .vscode
 .idea
+
+
+
+# Backend
+
+
+
+# Frontend
+/frontend/node_modules/
+/frontend/build/
