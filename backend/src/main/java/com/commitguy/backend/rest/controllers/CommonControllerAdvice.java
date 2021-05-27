@@ -1,7 +1,7 @@
 package com.commitguy.backend.rest.controllers;
 
 import com.commitguy.backend.model.exceptions.common.PermissionException;
-import com.commitguy.backend.rest.dtos.ErrorDto;
+import com.commitguy.backend.rest.dtos.errors.ErrorDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

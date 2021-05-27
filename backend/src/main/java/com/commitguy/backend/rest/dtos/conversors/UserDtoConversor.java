@@ -1,8 +1,8 @@
 package com.commitguy.backend.rest.dtos.conversors;
 
 import com.commitguy.backend.model.entities.User;
-import com.commitguy.backend.rest.dtos.AuthenticatedUserDto;
-import com.commitguy.backend.rest.dtos.UserDto;
+import com.commitguy.backend.rest.dtos.user.AuthenticatedUserDto;
+import com.commitguy.backend.rest.dtos.user.UserDto;
 
 public class UserDtoConversor {
 

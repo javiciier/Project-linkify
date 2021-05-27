@@ -6,13 +6,15 @@ import com.commitguy.backend.model.exceptions.NonExistentUserException;
 import com.commitguy.backend.model.exceptions.UserAlreadyExistsException;
 import com.commitguy.backend.model.exceptions.common.PermissionException;
 import com.commitguy.backend.model.services.UserService;
-import com.commitguy.backend.model.services.UserServiceImpl;
-import com.commitguy.backend.rest.dtos.*;
 import com.commitguy.backend.rest.dtos.conversors.UserDtoConversor;
+import com.commitguy.backend.rest.dtos.errors.ErrorDto;
+import com.commitguy.backend.rest.dtos.user.AuthenticatedUserDto;
+import com.commitguy.backend.rest.dtos.user.ChangePasswordParamsDto;
+import com.commitguy.backend.rest.dtos.user.UserDto;
+import com.commitguy.backend.rest.dtos.user.UserLoginParamsDto;
 import com.commitguy.backend.rest.jwt.JwtGenerator;
 import com.commitguy.backend.rest.jwt.JwtInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -62,8 +64,8 @@ public class UserController {
      */
     @PutMapping("/{userId}/updateProfile")
     public UserDto updateProfile(@RequestAttribute Long id,
-                              @PathVariable Long userId,
-                              @Validated @RequestBody UserDto userDto) throws PermissionException, NonExistentUserException {
+                                 @PathVariable Long userId,
+                                 @Validated @RequestBody UserDto userDto) throws PermissionException, NonExistentUserException {
         // El usuario que quiere modificar su perfil debe ser el mismo que tiene la sesión activa
         if (!id.equals(userId))
             throw new PermissionException("Usuario no autorizado");

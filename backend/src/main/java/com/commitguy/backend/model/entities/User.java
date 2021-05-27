@@ -1,9 +1,7 @@
 package com.commitguy.backend.model.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Arrays;
 
 @Entity
 public class User {
@@ -12,6 +10,7 @@ public class User {
     private String surname1;
     private String surname2;
     private String email;
+    @Lob
     private byte[] image;
     private String nickName;
     private String password;
@@ -105,6 +104,7 @@ public class User {
                 + "surname2: " + this.surname2 + " "
                 + "email: " + this.email + " "
                 + "nickName: " + this.nickName + " "
-                + "password: " + this.password;
+                + "password: " + this.password
+                + "image: " + Arrays.toString(this.image);
     }
 }

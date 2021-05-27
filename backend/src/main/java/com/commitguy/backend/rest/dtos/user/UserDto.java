@@ -1,4 +1,4 @@
-package com.commitguy.backend.rest.dtos;
+package com.commitguy.backend.rest.dtos.user;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -14,7 +14,7 @@ public class UserDto {
     private String email;
     private byte[] image;
 
-    public UserDto() {};
+    public UserDto() {}
 
     public UserDto(Long id, String name, String surname1, String surname2, String password, String nickName, String email, byte[] image) {
         this.id = id;

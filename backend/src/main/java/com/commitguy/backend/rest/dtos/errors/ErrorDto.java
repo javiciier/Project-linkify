@@ -1,4 +1,4 @@
-package com.commitguy.backend.rest.dtos;
+package com.commitguy.backend.rest.dtos.errors;
 
 import java.util.List;
 

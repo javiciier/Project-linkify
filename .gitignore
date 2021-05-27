@@ -1,13 +1,14 @@
 # Common
-.vscode
-.idea
-
+**.vscode
+**.idea
+**.DS_Store
 
 
 # Backend
-
+**/target
 
 
 # Frontend
 **/node_modules
 **/build
+

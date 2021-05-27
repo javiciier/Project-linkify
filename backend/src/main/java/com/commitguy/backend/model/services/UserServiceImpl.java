@@ -46,6 +46,7 @@ public class UserServiceImpl implements UserService {
         if (newUser.getImage() != null)
             actualUser.setImage(newUser.getImage());
 
+        userDao.save(actualUser);
         return actualUser;
     }
 

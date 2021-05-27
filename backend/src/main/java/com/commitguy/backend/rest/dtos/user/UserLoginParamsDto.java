@@ -1,4 +1,4 @@
-package com.commitguy.backend.rest.dtos;
+package com.commitguy.backend.rest.dtos.user;
 
 import com.commitguy.backend.model.entities.User;
 
