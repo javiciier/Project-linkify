@@ -90,7 +90,6 @@ export const changePassword = (userId, oldPassword, newPassword, onSuccessCallba
     }
 
 /* ****************************************** ACCIONES ****************************************** */
-
 /**
  * Devuelve una acción para indicar que se ha completado el login.
  * @param {Object} loggedInUser - Datos del usuario 
@@ -98,7 +97,7 @@ export const changePassword = (userId, oldPassword, newPassword, onSuccessCallba
  */
 const loginCompleted = (loggedInUser) => ({
     type: actionTypes.LOGIN_COMPLETED,
-    loggedInUser
+    data: loggedInUser
 })
 
 
@@ -115,9 +114,9 @@ const logoutCompleted = () => ({
  * Devuelve una acción para indicar que se ha registrado un nuevo usuario.
  * @returns {Object} - Tipo de la acción y datos del nuevo usuario
  */
- const signedUpCompleted = (signedUpUser) => ({
+const signedUpCompleted = (signedUpUser) => ({
     type: actionTypes.SIGN_UP_COMPLETED,
-    signedUpUser
+    data: signedUpUser
 })
 
 
@@ -125,7 +124,7 @@ const logoutCompleted = () => ({
  * Devuelve una acción para indicar que se han modificado los datos del usuario.
  * @returns {Object} - Tipo de la acción y datos actualizados del usuario
  */
- const updateProfileCompleted = (updatedUser) => ({
+const updateProfileCompleted = (updatedUser) => ({
     type: actionTypes.UPDATE_PROFILE_COMPLETED,
-    updatedUser
+    data: updatedUser
 })

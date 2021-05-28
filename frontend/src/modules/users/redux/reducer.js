@@ -2,7 +2,7 @@ import {combineReducers} from 'redux';
 import * as actionTypes from './actionTypes';
 
 const defaultState = {
-    user: null
+    user: {}
 }
 
 
@@ -30,7 +30,8 @@ const user = (state = defaultState.user, action) => {
     }
 }
 
-
-export const reducer = combineReducers({
+const reducer = combineReducers({
     user
 });
+
+export default reducer;
