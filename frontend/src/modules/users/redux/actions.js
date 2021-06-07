@@ -97,7 +97,7 @@ export const changePassword = (userId, oldPassword, newPassword, onSuccessCallba
  */
 const loginCompleted = (loggedInUser) => ({
     type: actionTypes.LOGIN_COMPLETED,
-    data: loggedInUser
+    loggedInUser
 })
 
 
@@ -116,7 +116,7 @@ const logoutCompleted = () => ({
  */
 const signedUpCompleted = (signedUpUser) => ({
     type: actionTypes.SIGN_UP_COMPLETED,
-    data: signedUpUser
+    signedUpUser
 })
 
 
@@ -126,5 +126,5 @@ const signedUpCompleted = (signedUpUser) => ({
  */
 const updateProfileCompleted = (updatedUser) => ({
     type: actionTypes.UPDATE_PROFILE_COMPLETED,
-    data: updatedUser
+    updatedUser
 })

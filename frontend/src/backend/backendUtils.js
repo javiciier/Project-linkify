@@ -1,5 +1,4 @@
 import 'dotenv';
-import HTTP_STATUS_CODES from 'http-status-enum';
 import ServiceError from './exceptions/ServiceError';
 
 const BACKEND_URL = `${process.env.REACT_APP_BACKEND_URL}`;
@@ -116,8 +115,8 @@ const handleOkResponse = (response, onSuccessCallback) => {
   // Si no se recibe ningún callback, no se ejecutará nada
   if (!onSuccessCallback) return true;
 
-  // Si la respuesta no tiene ningún contenido, se ejecuta el callback
-  if (response.status === HTTP_STATUS_CODES.NO_CONTENT) {
+  // Si la respuesta no tiene ningún contenido (204 NO CONTENT), se ejecuta el callback
+  if (response.status === 204) {
     onSuccessCallback();
     return true;
   }
@@ -142,8 +141,8 @@ const handle4XXResponse = (response, onErrorCallback) => {
   if (response.status < 400 || response.status >= 500)
     return false;
 
-  // Si el error es por falta de autorización y existe una función para gestionarlo, se ejecuta
-  if (response.status === HTTP_STATUS_CODES.UNAUTHORIZED || onUnauthorizedErrorCallback) {
+  // Si el error es por falta de autorización (401 UNAUTHORIZED) y existe una función para gestionarlo, se ejecuta
+  if (response.status === 401 || onUnauthorizedErrorCallback) {
     onUnauthorizedErrorCallback();
     return true;
   }
