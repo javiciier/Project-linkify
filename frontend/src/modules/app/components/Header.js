@@ -1,38 +1,47 @@
-import React, { Fragment, useState } from 'react';
-import {useSelector} from 'react-redux';
-import {Link} from 'react-router-dom';
-import { Box, IconButton, makeStyles } from '@material-ui/core';
+import React, {useState, createRef} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {Link, NavLink} from 'react-router-dom';
+import { makeStyles } from '@material-ui/core';
+import 'fontsource-roboto';
 
 import users from '../../users';
 
-import { AppBar, Container, Icon, Toolbar, Typography, List, ListItem, Menu, MenuItem, Button } from '@material-ui/core';
-import { flexbox } from '@material-ui/system';
+import { AppBar, Toolbar, Typography, List, ListItem, Menu, MenuItem, Button } from '@material-ui/core';
 
 /* ************************************ ESTILOS (CSS) ************************************ */
-const useStyles = makeStyles( (theme) => ({
+const useStyles = makeStyles( () => ({
     appBar: {
         backgroundColor: '#E8F1F5',
         // display: 'flex',
         // flexDirection: 'row',
         // justifyContent: 'space-between',
         flexGrow: 1,
-        height: 'auto'
+        height: '4em',
     },
     appLogo: {
         flex: 1,
         fontWeight: 'bold'
     },
     toolbarActions: {
-        // display: 'flex',
+        display: 'flex',
     },
     userActions: {
         display: 'flex',
         // flex: 1,
         // justifyContent: 'space-between',
     },
+    userButton: {
+        fontWeight: 'bold',
+        color: '#004A7C',
+    },
     link: {
         color: '#005691',
         textDecoration: 'none'
+    },
+    navLink: {
+        fontFamily: 'Roboto',
+        textDecoration: 'none',
+        color: '#005691',
     }
 }));
 
@@ -52,16 +61,18 @@ const menuTransformOrigin = {
  */
 const Header = () => {
     const styles = useStyles();
+    const dispatch = useDispatch();
+    const [menuAnchorEl, setMenuAnchorEl] = useState(null);         // Elemento al que está anclado el menú
+    const [shouldMenuOpen, setMenuOpen] = useState(false);
     const nickName = useSelector(users.selectors.getNickname);
+    let buttonRef = createRef(null);
+
     
     /* ************************************ FUNCIONES ************************************ */
     const showUserActions = () => {
-        const [menuAnchorEl, setMenuAnchorEl] = useState(null);         // Elemento al que está anclado el menú
-        const [shouldMenuOpen, setMenuOpen] = useState(false);
-
-        const handleButtonClick = (e) => {
+        const handleButtonClick = () => {
             setMenuOpen(true);
-            setMenuAnchorEl(e.currentTarget);
+            setMenuAnchorEl(buttonRef.current);
         };
 
         const handleMenuClose = () => {
@@ -69,14 +80,21 @@ const Header = () => {
             setMenuAnchorEl(null);
         };
 
+        const handleLogoutClick = (e) =>{
+            e.preventDefault();
+            dispatch(users.actions.logout());
+        }
+
 
         return (
             <>
                 <Button
+                    className={styles.userButton}
                     variant="outlined"
                     onClick={handleButtonClick}
+                    ref={buttonRef}
                     >
-                    nickName
+                    {nickName}
                 </Button>
 
                 <Menu
@@ -88,20 +106,27 @@ const Header = () => {
                     anchorOrigin={menuAnchorOrigin}
                     transformOrigin={menuTransformOrigin}
                 >
-                    <MenuItem>
-                        <Link to="/users/change-password" className={styles.link}>
+                    <MenuItem onClick={() => setMenuOpen(false)}>
+                        <Link to="/users/change-password"
+                            className={styles.link}
+                        >
                             Cambiar contraseña
                         </Link>
                     </MenuItem>
 
-                    <MenuItem>
-                        <Link to="/users/update-profile" className={styles.link}>
+                    <MenuItem onClick={() => setMenuOpen(false)}>
+                        <Link to="/users/update-profile"
+                            className={styles.link}
+                        >
                             Actualizar perfil
                         </Link>
                     </MenuItem>
 
-                    <MenuItem>
-                        <Link to="/users/logout" className={styles.link}>
+                    <MenuItem onClick={() => setMenuOpen(false)}>
+                        <Link href="#" to="/users/logout"
+                            className={styles.link}
+                            // onClick={handleLogoutClick}
+                        >
                             Desconectar
                         </Link>
                     </MenuItem>
@@ -115,19 +140,15 @@ const Header = () => {
             <div className="nonUserActions">
                 <List className={styles.userActions}>
                     <ListItem>
-                        <Button variant="text">
-                            <Link to="/users/signup" className={styles.link}>
-                                <h3>Registrarse</h3>
-                            </Link>
-                        </Button>
+                        <NavLink to="/users/signup" className={styles.navLink}>
+                            <h3>Registrarse</h3>
+                        </NavLink>
                     </ListItem>
 
                     <ListItem>
-                        <Button>
-                            <Link to="/users/login" className={styles.link}>
-                                <h3>Acceder</h3>
-                            </Link>
-                        </Button>
+                        <NavLink to="/users/login" className={styles.navLink}>
+                            <h3>Acceder</h3>
+                        </NavLink>
                     </ListItem>
                 </List>
             </div>
@@ -138,7 +159,6 @@ const Header = () => {
     return (
         <AppBar position="static" className={styles.appBar}>
             <Toolbar>
-
                 {/* Logotipo */}
                 <Typography variant="h4" className={styles.appLogo}>
                     <Link to="/" className={styles.link}>Linkify</Link>

@@ -3,7 +3,6 @@
 DROP TABLE User;
 
 
-
 /* CREACIÓN DE TABLAS */
 CREATE TABLE User (
     id              BIGINT NOT NULL AUTO_INCREMENT,

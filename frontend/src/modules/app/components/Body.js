@@ -1,12 +1,13 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-import {Route, Switch} from 'react-router-dom';
+import {Redirect, Route, Switch, } from 'react-router-dom';
 
 
 import users from '../../users';
 
-
 import {AppStatusDialog} from '../../common'
+import LandingPage from './LandingPage';
+import {Login, Logout} from '../../users';
 
 
 /**
@@ -14,14 +15,19 @@ import {AppStatusDialog} from '../../common'
  */
 const Body = () => {
     /* ************************************ FUNCIONES ************************************ */
-    
+    const loggedIn = useSelector(users.selectors.isLoggedIn);
     
     
     /* *********************************** COMPONENTE ************************************ */
     return (
         <div className={Body.name}>
             <AppStatusDialog/>
-
+            <br/>
+            <Switch>
+                {!loggedIn && <Route exact path="/"><LandingPage/></Route>}
+                {!loggedIn && <Route exact path="/users/login"> <Login/> </Route>}
+                <Route exact path="/users/logout"> <Logout/> </Route>
+            </Switch>
         </div>
     )
 }

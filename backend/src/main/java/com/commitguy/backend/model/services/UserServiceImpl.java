@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
         // Buscar el usuario en la BBDD
         Optional<User> user = userDao.findByNickName(nickName);
         if (!user.isPresent())
-            throw new NonExistentUserException("Usuario no encontrado");
+            throw new NonExistentUserException("Usuario '" + nickName + "' no encontrado");
         User retrievedUser = user.get();
 
         // Comprobar si contraseñas coinciden

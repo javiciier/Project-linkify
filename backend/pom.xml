@@ -140,7 +140,6 @@
                     <password>${dataSource.password}</password>
                     <autocommit>true</autocommit>
                     <onError>continue</onError>
-                    <orderFile>ascending</orderFile>
                     <!-- Conjunto de ficheros SQL a ejecutar -->
                     <fileset>
                         <basedir>${basedir}</basedir>
@@ -172,6 +171,9 @@
                             <fileset>
                                 <basedir>${basedir}</basedir>
                                 <includes>
+                                    <include>
+                                        src/sql/${dataSource.createTablesScript}
+                                    </include>
                                     <include>
                                         src/sql/${dataSource.createTablesScript}
                                     </include>

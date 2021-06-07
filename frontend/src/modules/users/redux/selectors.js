@@ -1,3 +1,10 @@
+const isEmpty = (obj) => {
+    let hasItems = Object.keys(obj).length !== 0;
+    let isObject = obj.constructor === Object;
+
+    return (obj && isObject && !hasItems);
+}
+
 /**
  * Obtiene el estado asociado a los usuarios.
  * @returns Estado asociado a los usuarios.
@@ -14,18 +21,19 @@ export const getUser = (state) => getUsersState(state).user;
  * Comprueba si el usuario tiene sesión iniciada
  * @returns Booleano indicando si usuario tiene sesión iniciada
  */
-export const isLoggedIn = (state) => getUser(state) !== {};
+export const isLoggedIn = (state) => !isEmpty(getUser(state));
+
 
 /**
  * Obtiene el apodo del usuario.
  * @returns String con el nickname del usuario (o null si no está loggeado)
  */
 export const getNickname = (state) =>
-    isLoggedIn(state) ? getUser(state).nickName : null;
+    isLoggedIn(state) ? getUser(state).user.nickName : null;
 
 /**
  * Obtiene el nombre del usuario.
  * @returns String con el nombre del usuario (o null si no está loggeado)
  */
 export const getName = (state) =>
-    isLoggedIn(state) ? getUser(state).name : null;
+    isLoggedIn(state) ? getUser(state).user.name : null;

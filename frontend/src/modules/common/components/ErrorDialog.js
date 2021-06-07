@@ -1,33 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {ServiceError} from '../../../backend';
-
-import {Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
-import {Button} from 'reactstrap';
-
+import { Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
 
+/* ************************************ ESTILOS (CSS) ************************************ */
+// const useStyles = makeStyles( () => ({
+
+// }));
+
+
+/* ************************************ COMPONENTE ************************************ */
+/**
+ * Diálogo para mostrar errores importantes que necesitan interacción con el usuario
+ */
 const ErrorDialog = ({error, onCloseCallback}) => {
-    if (error == null) return null;
-
-    const message = (error instanceof ServiceError) ? `${ServiceError.name}` : error.message;
+    const [shouldOpen, setOpen] = useState(false);
+    
+    /* *********************************** FUNCIONES ************************************ */    
+    const handleCloseDialog = () => {
+        setOpen(false);
+        onCloseCallback();
+    }
 
     /************************************ COMPONENTE *************************************/
+    if (error == null) return null;
+
+    const message = (error instanceof ServiceError) ?
+        `${ServiceError.name}`
+        : error.message;
+    
     return (
-        <Modal animation={true}>
-                <ModalHeader>Error</ModalHeader>
+        <Dialog 
+            open={shouldOpen}
+            onClose={handleCloseDialog}
+        >
+            <DialogTitle>
+                {typeof(error)}
+            </DialogTitle>
 
-                <ModalBody>
+            <DialogContent>
+                <Typography gutterBottom>
                     <p>{message}</p>
-                </ModalBody>
+                </Typography>
+            </DialogContent>
 
-                <ModalFooter>
-                    <Button variant="primary" onClick={onCloseCallback}>
-                        Cerrar
-                    </Button>
-                </ModalFooter>
-
-        </Modal>
+            <DialogActions>
+                <Button
+                    color="primary"
+                    onClick={handleCloseDialog}
+                >
+                    Cerrar
+                </Button>
+            </DialogActions>
+        </Dialog>
     )
 }
 

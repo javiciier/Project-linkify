@@ -27,7 +27,7 @@ const loading = (state = initialState.loading, action) => {
 const error = (state = initialState.error, action) => {
     switch (action.type) {
         case actionTypes.ERROR:
-            return action.data;
+            return action.error;
         
         default:
             return state;

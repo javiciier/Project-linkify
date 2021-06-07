@@ -23,16 +23,14 @@ const store = configureStore();
 
 // Configurar conexión con backend
 backend.init( (err) =>
-    store.dispatch(app.actions.error(new ServiceError(err.message)))
+    store.dispatch(app.actions.error(new ServiceError()))
 );
 
 
 ReactDOM.render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <App />
-        </Provider>
-    </React.StrictMode>,
+    <Provider store={store}>
+        <App />
+    </Provider>,
     document.getElementById('root')
 );
 

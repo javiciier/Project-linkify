@@ -59,8 +59,9 @@ export const loginFromToken = (onSuccessCallback, onUnauthorizedCallback) => {
 
 /**
  * Cierra la sesión del usuario.
+ * @param {Function} onSuccessCallback - Función a ejecutar en caso de logout exitoso
  */
-export const logout = () => removeUserJWT();
+export const logout = () => {removeUserJWT()}
 
 
 /**

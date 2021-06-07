@@ -32,19 +32,19 @@ export const loginFromToken = (onUnauthorizedCallback) =>
             if (loggedInUser)
                 dispatch(loginCompleted(loggedInUser));
         }
-
+        
         backend.userService.loginFromToken(onSuccess, onUnauthorizedCallback);
     } 
 
 /**
  * Acción para cerrar sesión en el servicio.
+ * @param {Function} onSuccessCallback - Función a ejecutar en caso de logout exitoso
  * @returns {Object} - Estado indicando que se ha cerrado sesión
  */
 export const logout = () => 
     dispatch => {
         backend.userService.logout();
-
-        return logoutCompleted();
+        dispatch(logoutCompleted());
     }
 
 
@@ -84,10 +84,9 @@ export const updateProfile = (user, onSuccessCallback, onErrorCallback) =>
     }
 
 
-export const changePassword = (userId, oldPassword, newPassword, onSuccessCallback, onErrorCallback) =>
-    dispatch => {
-        backend.userService.changePassword(userId, oldPassword, newPassword, onSuccessCallback, onErrorCallback);
-    }
+export const changePassword = (userId, oldPassword, newPassword, onSuccessCallback, onErrorCallback) => {
+    backend.userService.changePassword(userId, oldPassword, newPassword, onSuccessCallback, onErrorCallback);
+}
 
 /* ****************************************** ACCIONES ****************************************** */
 /**

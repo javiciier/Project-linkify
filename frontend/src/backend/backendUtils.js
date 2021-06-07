@@ -1,9 +1,11 @@
-import 'dotenv';
 import ServiceError from './exceptions/ServiceError';
+
 
 const BACKEND_URL = `${process.env.REACT_APP_BACKEND_URL}`;
 const JWT_NAME = `${process.env.REACT_APP_JWT_NAME}`;
 
+let onServiceErrorCallback;                  // Función a ejecutar cuando se produzca un error en el backend
+let onUnauthorizedErrorCallback;             // Función a ejecutar cuando se produzca un error 401: UNAUTHORIZED
 
 /* ****************************************** SERVICIOS ***************************************** */
 /**
@@ -18,9 +20,9 @@ const JWT_NAME = `${process.env.REACT_APP_JWT_NAME}`;
  * @param {Function} onErrorCallback - Función a ejecutar en caso de error en la respuesta
  */
 export const backendFetch = (endpoint, parameters,  onSuccessCallback, onErrorCallback) => {
-  let resource = BACKEND_URL + endpoint;
-  const response = fetch(resource, parameters);
-  response.then( (results) => handleResponse(results, onSuccessCallback, onErrorCallback))
+  let resource = BACKEND_URL + `${endpoint}`;
+  fetch(resource, parameters)
+    .then( (results) => handleResponse(results, onSuccessCallback, onErrorCallback))
     .catch(onServiceErrorCallback);
 };
 
@@ -81,8 +83,7 @@ export const removeUserJWT = () => sessionStorage.removeItem(JWT_NAME);
 
 /* ****************************************** HANDLERS ****************************************** */
 
-let onServiceErrorCallback;                  // Función a ejecutar cuando se produzca un error en el backend
-let onUnauthorizedErrorCallback;             // Función a ejecutar cuando se produzca un error 401: UNAUTHORIZED
+
 
 /**
  * Función que maneja la respuesta _response_ recibida del backend.

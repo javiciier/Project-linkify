@@ -14,19 +14,19 @@ const defaultState = {
 const user = (state = defaultState.user, action) => {
     switch (action.type) {
         case actionTypes.LOGIN_COMPLETED:
-            return action.loggedInUser.user;
-        
-        case actionTypes.LOGOUT_COMPLETED:
-            return defaultState.user;
+            return action.loggedInUser;
         
         case actionTypes.SIGN_UP_COMPLETED:
             return action.signedUpUser.user;
-        
+            
         case actionTypes.UPDATE_PROFILE_COMPLETED:
             return action.updatedUser;
+                    
+        case actionTypes.LOGOUT_COMPLETED:
+            return defaultState.user;
 
         default:
-            return defaultState;
+            return state;
     }
 }
 

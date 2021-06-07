@@ -26,5 +26,5 @@ export const loaded = () => ({
  */
 export const error = (error) => ({
     type: actionTypes.ERROR,
-    data: error
+    error
 })
