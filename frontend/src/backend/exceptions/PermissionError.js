@@ -1,13 +1,13 @@
 /**
- * Error de red al recibir respuesta del backend.
+ * Permisos insuficientes para realizar una operación.
  */
-class ServiceError extends Error {
+ class PermissionError extends Error {
     /**
      * @constructor
      * @param {String} details - Detalles del error
      */
     constructor(details) {
-        super(`${ServiceError.name}: ${details}`);
+        super(`${PermissionError.name}: ${details}`);
         this.details = details;
     }
 
@@ -23,10 +23,10 @@ class ServiceError extends Error {
      */
     toObject = () => (
         {
-            errorName: `${ServiceError.name}`,
+            errorName: `${PermissionError.name}`,
             details: this.getDetails(),
         }
     );
     
 }
-export default ServiceError;
+export default PermissionError;

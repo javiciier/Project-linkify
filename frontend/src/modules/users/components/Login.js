@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
-import { useDispatch } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import * as actions from '../redux/actions';
+import app from '../../app';
+import {PermissionError} from '../../../backend';
 
-import {ErrorAlert} from '../../common';
+import {ErrorAlert, ErrorDialog} from '../../common';
 import {Container, Card, CardContent, CardActions, Typography, TextField, Button, FormControl} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 
@@ -46,6 +48,7 @@ const Login = () => {
     const [nickName, setNickName] = useState('');
     const [password, setPassword] = useState('');
     const [backendErrors, setBackendErrors] = useState(null);
+    const appErrors = useSelector(app.selectors.getError);
     let loginForm;
 
     /* ************************************ FUNCIONES ************************************ */
@@ -54,12 +57,18 @@ const Login = () => {
 
         if (loginForm.checkValidity()) {
             let onSuccess = () => history.push('/');
-            let onError = (errors) => setBackendErrors(errors);
+            let onError = (errors) => {
+                setBackendErrors(errors);
+            }
             let onUnauthorized = () => {
                 history.push('/users/login');
                 dispatch(actions.logout());
-            }
+                dispatch(app.actions.error(
+                    new PermissionError("No autorizado para realizar esta operación").toObject())
+                )
 
+            }
+            
             dispatch(actions.login(nickName.trim(), password, onSuccess, onError, onUnauthorized));
         } else {
             setBackendErrors(null);
@@ -70,10 +79,10 @@ const Login = () => {
     /* ************************************ COMPONENTE ************************************ */
     return (
         <div className={styles.component}>
-            <ErrorAlert
-                errors={backendErrors}
+            <ErrorDialog
+                errors={backendErrors | appErrors && {error: appErrors.getDetails()}}
                 onCloseCallback={() => setBackendErrors(null)}
-                />
+            />
 
             <Container className={styles.container}>
                 <Typography variant="h4">

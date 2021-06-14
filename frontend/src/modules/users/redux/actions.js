@@ -1,6 +1,7 @@
 import backend from '../../../backend';
 import * as actionTypes from './actionTypes';
 
+import app from '../../app';
 
 /* ***************************************** MIDDLEWARE ***************************************** */
 /**
@@ -19,6 +20,7 @@ export const login = (nickName, password, onSuccessCallback, onErrorCallback, on
         }
 
         backend.userService.login(nickName, password, onSuccess, onErrorCallback, onUnauthorizedCallback);
+
     }
 
 

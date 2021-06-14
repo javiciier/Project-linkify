@@ -22,15 +22,20 @@ import {App} from './modules/app';
 const store = configureStore();
 
 // Configurar conexión con backend
-backend.init( (err) =>
-    store.dispatch(app.actions.error(new ServiceError()))
+backend.setDefaultServiceError( () =>
+    store.dispatch(app.actions.error(new ServiceError('No se puede conectar con el backend')))
 );
 
 
-ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
-    document.getElementById('root')
-);
+const main = () => {
+    store.dispatch(app.actions.loading());
 
+    ReactDOM.render(
+        <Provider store={store}>
+            <App />
+        </Provider>,
+        document.getElementById('root')
+    );
+}
+
+main();

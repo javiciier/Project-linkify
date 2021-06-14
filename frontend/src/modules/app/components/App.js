@@ -1,14 +1,15 @@
+import 'dotenv';
 import React, {useEffect} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {BrowserRouter as Router} from 'react-router-dom';
 
 import users from '../../users';
+import { PermissionError } from '../../../backend';
 
 /* Componentes */
 import Header from './Header';
 import Body from './Body';
-
-
+import app from '..';
 
 
 /**
@@ -22,10 +23,17 @@ const App = () => {
         /** Acción a ejecutar si el usuario no está autorizado para iniciar sesión con el JWT */
         let onUnauthorized = () => {
             dispatch(users.actions.logout());
+            // dispatch(app.actions.error(
+            //     new PermissionError("No existe ningun JWT").toObject())
+            // )
         };
 
         /* ACCIONES A EJECUTAR INMEDIATAMENTE AL CARGAR LA APLICACIÓN*/
-        dispatch(users.actions.loginFromToken(onUnauthorized()));
+        setTimeout( () => {
+            
+        }, 3*1000)
+            dispatch(users.actions.loginFromToken(onUnauthorized()));
+            dispatch(app.actions.loaded())
     } );
 
 
@@ -34,7 +42,7 @@ const App = () => {
         <div className={App.name}>
             <Router>
                 <Header/>
-                <Body/>
+                <Body />
             </Router>
         </div>
     );

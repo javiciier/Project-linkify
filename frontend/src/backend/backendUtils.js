@@ -167,14 +167,16 @@ const handle4XXResponse = (response, onErrorCallback) => {
  * Asigna una función a ejecutar en caso de que se produzcan errores de conexión con el backend.
  * @param {Function} callback - Función a ejecutar en caso de error de conexión
  */
-export const init = (callback) => {onServiceErrorCallback = callback};
+export const setDefaultServiceError = (callback) => {onServiceErrorCallback = callback};
 
 
 /**
  * Asigna una función a ejecutar en caso de no estar autorizados a realizar una petición
  * @param {Function} callback - Función a ejecutar en caso de error 401: UNAUTHORIZED
  */
-export const setOnUnauthorizedErrorCallback = (callback) => {onUnauthorizedErrorCallback = callback;};
+export const setOnUnauthorizedErrorCallback = (callback) => {
+  onUnauthorizedErrorCallback = callback;
+};
 /* ************************************ FUNCIONES AUXILIARES ************************************ */
 /**
  * Comprueba en las cabeceras de la respuesta si existe contenido y es un JSON

@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import {ServiceError} from '../../../backend';
 import { Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
+import app from '../../app';
 
 /* ************************************ ESTILOS (CSS) ************************************ */
 // const useStyles = makeStyles( () => ({
@@ -15,8 +17,8 @@ import { makeStyles } from '@material-ui/core';
 /**
  * Diálogo para mostrar errores importantes que necesitan interacción con el usuario
  */
-const ErrorDialog = ({error, onCloseCallback}) => {
-    const [shouldOpen, setOpen] = useState(false);
+const ErrorDialog = ({error, onCloseCallback, show}) => {
+    const [shouldOpen, setOpen] = useState(show);
     
     /* *********************************** FUNCIONES ************************************ */    
     const handleCloseDialog = () => {
@@ -27,22 +29,20 @@ const ErrorDialog = ({error, onCloseCallback}) => {
     /************************************ COMPONENTE *************************************/
     if (error == null) return null;
 
-    const message = (error instanceof ServiceError) ?
-        `${ServiceError.name}`
-        : error.message;
-    
+    const {errorName, details} = error;
+
     return (
-        <Dialog 
+        <Dialog
             open={shouldOpen}
             onClose={handleCloseDialog}
         >
             <DialogTitle>
-                {typeof(error)}
+                {errorName}
             </DialogTitle>
 
             <DialogContent>
                 <Typography gutterBottom>
-                    <p>{message}</p>
+                    {details}
                 </Typography>
             </DialogContent>
 
@@ -60,8 +60,9 @@ const ErrorDialog = ({error, onCloseCallback}) => {
 
 
 ErrorDialog.propTypes = {
-    error: PropTypes.object,
-    onCloseCallback: PropTypes.func.isRequired
+    error: PropTypes.object, 
+    onCloseCallback: PropTypes.func.isRequired,
+    show: PropTypes.bool
 }
 
 export default ErrorDialog;
