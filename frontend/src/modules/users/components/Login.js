@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
@@ -6,7 +6,7 @@ import * as actions from '../redux/actions';
 import app from '../../app';
 import {PermissionError} from '../../../backend';
 
-import {ErrorAlert, ErrorDialog} from '../../common';
+import {ErrorDialog} from '../../common';
 import {Container, Card, CardContent, CardActions, Typography, TextField, Button, FormControl} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 
@@ -64,7 +64,7 @@ const Login = () => {
                 history.push('/users/login');
                 dispatch(actions.logout());
                 dispatch(app.actions.error(
-                    new PermissionError("No autorizado para realizar esta operación").toObject())
+                    new PermissionError('No autorizado para realizar esta operación').toObject())
                 )
 
             }

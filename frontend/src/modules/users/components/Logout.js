@@ -1,4 +1,4 @@
-import {Card, CircularProgress, Container, makeStyles } from '@material-ui/core';
+import {Card, CircularProgress, makeStyles } from '@material-ui/core';
 import {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {useHistory} from 'react-router-dom';
@@ -8,16 +8,23 @@ import * as actions from '../redux/actions';
 /* ************************************ ESTILOS (CSS) ************************************ */
 const useStyles = makeStyles(() => ({
     component: {
-        container: 'flex',
+        display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
     },
     card: {
         width: '80%',
+        margin: '5%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
     }
 }));
 
-const spinnerStyle = {'color': '#004A7C'};
+const spinnerStyle = {
+    'color': '#004A7C',
+    'margin': '5%',
+};
 
 /* ************************************ COMPONENTE ************************************ */
 /**
@@ -33,12 +40,11 @@ const Logout = () => {
         dispatch(actions.logout());
 
         setTimeout( () => {
-            history.replace("/");
+            history.replace('/');
         }, msDelay)
     });
     
 
-    // TODO: estilizar mensaje de carga con spinner
     return (
         <div className={styles.component}>
             <Card className={styles.card}>

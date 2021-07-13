@@ -1,10 +1,9 @@
 import 'dotenv';
 import React, {useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {BrowserRouter as Router} from 'react-router-dom';
 
 import users from '../../users';
-import { PermissionError } from '../../../backend';
 
 /* Componentes */
 import Header from './Header';

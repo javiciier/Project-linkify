@@ -1,8 +1,6 @@
 import backend from '../../../backend';
 import * as actionTypes from './actionTypes';
 
-import app from '../../app';
-
 /* ***************************************** MIDDLEWARE ***************************************** */
 /**
  * Acción para iniciar sesión en el servicio.

@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import {ServiceError} from '../../../backend';
 import { Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core';
-import { useSelector } from 'react-redux';
-
-import app from '../../app';
 
 /* ************************************ ESTILOS (CSS) ************************************ */
 // const useStyles = makeStyles( () => ({

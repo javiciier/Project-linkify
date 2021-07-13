@@ -9,8 +9,6 @@ const initialState = {
 
 const loading = (state = initialState.loading, action) => {
     switch (action.type) {
-        case actionTypes.CONNECT_TO_BACKEND:
-
         case actionTypes.LOADING:
             return true;
 

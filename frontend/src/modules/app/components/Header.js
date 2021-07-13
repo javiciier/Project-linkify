@@ -1,5 +1,5 @@
 import React, {useState, createRef} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {Link, NavLink} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import 'fontsource-roboto';
@@ -61,7 +61,6 @@ const menuTransformOrigin = {
  */
 const Header = () => {
     const styles = useStyles();
-    const dispatch = useDispatch();
     const [menuAnchorEl, setMenuAnchorEl] = useState(null);         // Elemento al que está anclado el menú
     const [shouldMenuOpen, setMenuOpen] = useState(false);
     const nickName = useSelector(users.selectors.getNickname);
@@ -79,11 +78,6 @@ const Header = () => {
             setMenuOpen(false);
             setMenuAnchorEl(null);
         };
-
-        const handleLogoutClick = (e) =>{
-            e.preventDefault();
-            dispatch(users.actions.logout());
-        }
 
 
         return (
@@ -125,7 +119,6 @@ const Header = () => {
                     <MenuItem onClick={() => setMenuOpen(false)}>
                         <Link href="#" to="/users/logout"
                             className={styles.link}
-                            // onClick={handleLogoutClick}
                         >
                             Desconectar
                         </Link>
