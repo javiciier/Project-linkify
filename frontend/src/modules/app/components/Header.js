@@ -1,4 +1,4 @@
-import React, {useState, createRef} from 'react';
+import {useState, createRef} from 'react';
 import {useSelector} from 'react-redux';
 import {Link, NavLink} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';

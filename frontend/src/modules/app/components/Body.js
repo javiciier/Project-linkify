@@ -1,4 +1,3 @@
-import React from 'react';
 import {useSelector} from 'react-redux';
 import {Route, Switch} from 'react-router-dom';
 
@@ -7,7 +6,7 @@ import users from '../../users';
 
 import {AppStatusDialog} from '../../common'
 import LandingPage from './LandingPage';
-import {Login, Logout} from '../../users';
+import {Login, Logout, Signup, Home} from '../../users';
 
 
 /**
@@ -26,6 +25,8 @@ const Body = () => {
             <Switch>
                 {!loggedIn && <Route exact path="/"><LandingPage/></Route>}
                 {!loggedIn && <Route exact path="/users/login"> <Login/> </Route>}
+                {!loggedIn && <Route exact path="/users/signup"> <Signup/> </Route>}
+                {loggedIn && <Route exact path="/"> <Home/> </Route>}
                 <Route exact path="/users/logout"> <Logout/> </Route>
             </Switch>
         </div>

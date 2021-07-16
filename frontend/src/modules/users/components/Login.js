@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {useState} from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import * as actions from '../redux/actions';
 import app from '../../app';
 import {PermissionError} from '../../../backend';
 
-import {ErrorDialog} from '../../common';
+import {ErrorAlert} from '../../common';
 import {Container, Card, CardContent, CardActions, Typography, TextField, Button, FormControl} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 
@@ -48,7 +48,6 @@ const Login = () => {
     const [nickName, setNickName] = useState('');
     const [password, setPassword] = useState('');
     const [backendErrors, setBackendErrors] = useState(null);
-    const appErrors = useSelector(app.selectors.getError);
     let loginForm;
 
     /* ************************************ FUNCIONES ************************************ */
@@ -58,6 +57,7 @@ const Login = () => {
         if (loginForm.checkValidity()) {
             let onSuccess = () => history.push('/');
             let onError = (errors) => {
+                console.log(errors);
                 setBackendErrors(errors);
             }
             let onUnauthorized = () => {
@@ -79,8 +79,8 @@ const Login = () => {
     /* ************************************ COMPONENTE ************************************ */
     return (
         <div className={styles.component}>
-            <ErrorDialog
-                errors={backendErrors | appErrors && {error: appErrors.getDetails()}}
+            <ErrorAlert
+                errors={backendErrors}
                 onCloseCallback={() => setBackendErrors(null)}
             />
 

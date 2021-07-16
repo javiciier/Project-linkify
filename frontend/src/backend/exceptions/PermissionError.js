@@ -15,18 +15,20 @@
      * Devuelve los deatalles del error
      * @returns {String} Detalles del error
      */
-    getDetails = () => this.details;
+    getDetails() {
+        return this.details;
+    }
     
     /**
      * Devuelve un objeto representando el error
      * @returns {Object} Datos del error
      */
-    toObject = () => (
-        {
-            errorName: `${PermissionError.name}`,
-            details: this.getDetails(),
+    toObject() {
+        return {
+            errorName: PermissionError.name,
+            details: this.getDetails()
         }
-    );
-    
+    }
 }
+
 export default PermissionError;

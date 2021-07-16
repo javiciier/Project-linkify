@@ -1,5 +1,7 @@
 import {makeStyles} from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
+import users from '..';
 
 
 /* ************************************ ESTILOS (CSS) ************************************ */
@@ -9,7 +11,7 @@ const useStyles = makeStyles( () => ({
         flexDirection: 'column',
         alignItems: 'center'
     },
-    landingPageText: {
+    homeText: {
         margin: '5%',
         fontSize: '5vw'
     }
@@ -24,12 +26,12 @@ const useStyles = makeStyles( () => ({
 const LandingPage = () => {
     const styles = useStyles();
 
-
+    const user = useSelector(users.selectors.getName);
 
     return (
         <div className={styles.component}>
-            <h2 className={styles.landingPageText}>
-                Landing Page
+            <h2 className={styles.homeText}>
+                Bienvenido {user}
             </h2>
         </div>
     )

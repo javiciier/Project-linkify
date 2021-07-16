@@ -9,8 +9,9 @@ import '@fortawesome/fontawesome-free/css/fontawesome.css';
 import {Provider} from 'react-redux';
 import configureStore from './redux';
 import backend from './backend';
-import app from './modules/app';
 import {ServiceError} from './backend';
+import app from './modules/app';
+import users from './modules/users';
 
 
 /* Componentes */
@@ -28,7 +29,7 @@ backend.setDefaultServiceError( () =>
 
 
 const main = () => {
-    store.dispatch(app.actions.loading());
+    store.dispatch(users.actions.loginFromToken());
 
     ReactDOM.render(
         <Provider store={store}>
