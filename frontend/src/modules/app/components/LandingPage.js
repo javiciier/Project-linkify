@@ -1,17 +1,28 @@
 import {makeStyles} from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import { Login } from '../../users';
 
 
 
 /* ************************************ ESTILOS (CSS) ************************************ */
 const useStyles = makeStyles( () => ({
-    component: {
+    centeredText: {
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
     },
-    landingPageText: {
-        margin: '5%',
-        fontSize: '5vw'
+    welcomeText: {
+        margin: '3%',
+        fontSize: '5vw',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    createAccountText: {
+        fontSize: '3vw',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
     }
 
 }));
@@ -27,11 +38,21 @@ const LandingPage = () => {
 
 
     return (
-        <div className={styles.component}>
-            <h2 className={styles.landingPageText}>
-                Landing Page
-            </h2>
-        </div>
+
+        <>
+            <div>
+                <h2 className={styles.welcomeText}>Bienvenido a Linkify</h2>
+            </div>
+
+            <Login/>
+            <h4 className={styles.createAccountText}>
+                ¿Todavía no tienes una cuenta?
+                <Link to='/users/signup'>
+                    Crea tu cuenta
+                </Link>
+            </h4>
+
+        </>
     )
 };
 

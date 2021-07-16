@@ -12,9 +12,8 @@ import { AppBar, Toolbar, Typography, List, ListItem, Menu, MenuItem, Button } f
 const useStyles = makeStyles( () => ({
     appBar: {
         backgroundColor: '#E8F1F5',
-        // display: 'flex',
-        // flexDirection: 'row',
-        // justifyContent: 'space-between',
+        display: 'inline',
+        justifyContent: 'space-between',
         flexGrow: 1,
         height: '4em',
     },
@@ -64,6 +63,7 @@ const Header = () => {
     const [menuAnchorEl, setMenuAnchorEl] = useState(null);         // Elemento al que está anclado el menú
     const [shouldMenuOpen, setMenuOpen] = useState(false);
     const nickName = useSelector(users.selectors.getNickname);
+    const isLoggedIn = useSelector(users.selectors.isLoggedIn);
     let buttonRef = createRef(null);
 
     
@@ -158,7 +158,7 @@ const Header = () => {
                 </Typography>
         
                 {/* Acciones del usuario */}
-                {(nickName) ? showUserActions() : showNotLoggedInActions()}
+                {isLoggedIn && showUserActions()}
             </Toolbar>
         </AppBar>
     )

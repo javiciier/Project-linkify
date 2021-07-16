@@ -15,7 +15,7 @@ import { makeStyles } from '@material-ui/core';
 const useStyles = makeStyles( () => ({
     component: {
         position: 'relative',
-        margin: '10%',
+        margin: '5%',
     },
     container: {
         display: 'flex',
@@ -24,7 +24,7 @@ const useStyles = makeStyles( () => ({
     },
     card: {
         width: '80%',
-        border: '2px #005691 solid'
+        border: '2px #005691 solid',
     },
     form: {
         width: '100%'

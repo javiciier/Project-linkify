@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core';
 const useStyles = makeStyles( () => ({
     component: {
         position: 'relative',
-        margin: '10%',
+        margin: '5%',
     },
     container: {
         display: 'flex',

@@ -2,6 +2,7 @@ import 'dotenv';
 import {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {BrowserRouter as Router} from 'react-router-dom';
+import { makeStyles } from '@material-ui/core';
 
 import users from '../../users';
 
@@ -11,10 +12,24 @@ import Body from './Body';
 import app from '..';
 
 
+/* ************************************ ESTILOS (CSS) ************************************ */
+const useStyles = makeStyles( () => ({
+    container: {
+        display: 'flex',
+        flexDirection: 'column',
+        // background: 'lightblue'
+    },
+
+}));
+
+
+
+/* ************************************ COMPONENTE ************************************ */
 /**
  * Single Page Application (SPA) visible por el usuario.
 */
 const App = () => {
+    const styles = useStyles();
     const dispatch = useDispatch();
 
     /* ************************************ FUNCIONES ************************************ */
@@ -38,7 +53,7 @@ const App = () => {
 
     /* *********************************** COMPONENTE ************************************ */
     return (
-        <div className={App.name}>
+        <div className={styles.container}>
             <Router>
                 <Header/>
                 <Body />
