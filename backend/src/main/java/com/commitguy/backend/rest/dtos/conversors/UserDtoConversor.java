@@ -16,7 +16,7 @@ public class UserDtoConversor {
                 user.getPassword(),
                 user.getNickName(),
                 user.getEmail(),
-                user.getImage());
+                user.getAvatar());
 
         return dto;
     }

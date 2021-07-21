@@ -1,6 +1,7 @@
 package com.commitguy.backend.model.daos;
 
 import com.commitguy.backend.model.entities.User;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.Optional;
@@ -19,5 +20,4 @@ public interface UserDao extends PagingAndSortingRepository<User, Long> {
     public Optional<User> findByNickName(String nickName);
 
     public Optional<User> removeById(Long id);
-
 }

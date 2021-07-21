@@ -55,7 +55,6 @@ public class UserDto {
         this.surname1 = surname1;
     }
 
-    @Size(min = 1, max = 50)
     public String getSurname2() {
         return surname2;
     }

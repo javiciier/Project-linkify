@@ -2,16 +2,18 @@ package com.commitguy.backend.model.services;
 
 import com.commitguy.backend.model.daos.UserDao;
 import com.commitguy.backend.model.entities.User;
-
 import com.commitguy.backend.model.exceptions.UserAlreadyExistsException;
 import com.commitguy.backend.model.exceptions.IncorrectLoginException;
 import com.commitguy.backend.model.exceptions.NonExistentUserException;
-import com.commitguy.backend.model.exceptions.common.PermissionException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -43,8 +45,8 @@ public class UserServiceImpl implements UserService {
         if (newUser.getEmail() != null)
             actualUser.setEmail(newUser.getEmail());
 
-        if (newUser.getImage() != null)
-            actualUser.setImage(newUser.getImage());
+        if (newUser.getAvatar() != null)
+            actualUser.setAvatar(newUser.getAvatar());
 
         userDao.save(actualUser);
         return actualUser;
@@ -101,5 +103,37 @@ public class UserServiceImpl implements UserService {
         String newCypheredPassword = passwordEncoder.encode(newPassword);
         user.setPassword(newCypheredPassword);
         User updatedUser = userDao.save(user);
+    }
+
+
+    /* Más info: https://www.section.io/engineering-education/working-with-images-in-spring-boot/ */
+    @Transactional(readOnly = true)
+    @Override
+    public byte[] getAvatar(Long userId) throws NonExistentUserException {
+        // Busca al usuario en la BD
+        User user = permissionChecker.fetchUser(userId);
+
+        return user.getAvatar();
+    }
+
+
+    /* Más info: https://www.section.io/engineering-education/working-with-images-in-spring-boot/ */
+    @Override
+    public void setAvatar(Long userId, MultipartFile imageFile) throws NonExistentUserException {
+        // Busca al usuario en la BD
+        User user = permissionChecker.fetchUser(userId);
+
+        // Obtiene los datos de la imagen
+        byte [] imageBytes = null;
+        try {
+            imageBytes = imageFile.getBytes();
+        } catch (IOException io) {
+            System.out.println("Error procesando imagen");
+            System.out.println(io.getMessage());
+        }
+
+        // Guarda los datos de la imagen
+        user.setAvatar(imageBytes);
+        userDao.save(user);
     }
 }

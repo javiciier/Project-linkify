@@ -16,12 +16,15 @@ import com.commitguy.backend.rest.jwt.JwtGenerator;
 import com.commitguy.backend.rest.jwt.JwtInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 
 @RestController
 @RequestMapping("/users")
@@ -114,6 +117,7 @@ public class UserController {
     }
 
 
+    // TODO: DOCUMENTAR ESTE MÉTODO
     @PostMapping("/login")
     public AuthenticatedUserDto login(@RequestBody UserLoginParamsDto params) throws IncorrectLoginException, NonExistentUserException {
         // Intenta iniciar sesión con el usuario recibido
@@ -136,15 +140,13 @@ public class UserController {
     @PostMapping("/loginUsingToken")
     public AuthenticatedUserDto loginFromId(@RequestAttribute Long userId,
                                             @RequestAttribute String userToken) throws NonExistentUserException {
-        System.out.println("UserId: " + userId);
-        System.out.println("UserToken: " + userToken);
         // Busca el usuario por su id
         User user = userService.loginFromId(userId);
-        System.out.println(user.toString());
         return UserDtoConversor.toAuthenticatedUserDto(user, userToken);
     }
 
 
+    // TODO: DOCUMENTAR ESTE MÉTODO
     @PostMapping("/{userId}/changePassword")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void changePassword(@RequestAttribute Long id,
@@ -158,6 +160,45 @@ public class UserController {
         userService.changePassword(id, params.getOldPassword(), params.getNewPassword());
     }
 
+
+    // TODO: DOCUMENTAR ESTE MÉTODO
+    /* Más info:
+        - https://www.section.io/engineering-education/working-with-images-in-spring-boot/
+        - https://zetcode.com/springboot/serveimage/
+    */
+    @GetMapping("/{userId}/avatar")
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<byte[]> getAvatar(@PathVariable Long userId)
+            throws NonExistentUserException {
+        try {
+        // Obtiene los datos de la imagen del usuario
+        byte[] imageBytes = userService.getAvatar(userId);
+
+        // Crea la respuesta
+        return ResponseEntity.ok()
+                    .contentType(MediaType.IMAGE_JPEG)
+                    .body(imageBytes);
+        } catch (Exception exc) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+    // TODO: DOCUMENTAR ESTE MÉTODO
+    /* Más info:
+        - https://www.section.io/engineering-education/working-with-images-in-spring-boot/
+        - https://zetcode.com/springboot/serveimage/
+    */
+    @PostMapping(value = "/{userId}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> setAvatar(@PathVariable Long userId, @RequestParam MultipartFile imageFile)
+            throws NonExistentUserException {
+        // Establece la imagen del usuario
+        userService.setAvatar(userId, imageFile);
+        // Crea la respuesta
+        return ResponseEntity.status(HttpStatus.CREATED)
+                    .contentType(MediaType.IMAGE_JPEG)
+                    .build();
+    }
 
     /* ***************************** AUXILIAR FUNCTIONS ***************************** */
     private String generateUserToken(User user) {

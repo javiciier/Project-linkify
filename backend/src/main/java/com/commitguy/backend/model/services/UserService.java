@@ -5,6 +5,7 @@ import com.commitguy.backend.model.exceptions.UserAlreadyExistsException;
 import com.commitguy.backend.model.exceptions.IncorrectLoginException;
 import com.commitguy.backend.model.exceptions.NonExistentUserException;
 import com.commitguy.backend.model.exceptions.common.PermissionException;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
     /**
@@ -48,5 +49,20 @@ public interface UserService {
      * @throws IncorrectLoginException Error introduciendo los datos de acceso
      */
     void changePassword(Long userId, String oldPassword, String newPassword) throws NonExistentUserException, IncorrectLoginException;
+
+    /**
+     * Obtiene la foto de perfil del usuario.
+     * @param userId Usuario que tiene la imagen
+     * @return Imagen del usuario
+     */
+    public byte[] getAvatar(Long userId) throws NonExistentUserException;
+
+
+    /**
+     * Establece como foto de perfil del usuario la imagen recibida.
+     * @param userId Id del usuario
+     * @param imageFile Imagen del usuario
+     */
+    public void setAvatar(Long userId, MultipartFile imageFile) throws NonExistentUserException;
 
 }

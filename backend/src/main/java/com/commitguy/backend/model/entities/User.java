@@ -3,6 +3,12 @@ package com.commitguy.backend.model.entities;
 import javax.persistence.*;
 import java.util.Arrays;
 
+/**
+ * Representación del usuario en la BD.
+ * LINKS:
+ *  - Imágenes: https://vaadin.com/blog/saving-and-displaying-images-using-jpa
+ *  - Tutorial imágenes: https://github.com/DiegoSanzVi/saving_displaying_images_db
+ */
 @Entity
 public class User {
     private Long id;
@@ -10,21 +16,22 @@ public class User {
     private String surname1;
     private String surname2;
     private String email;
-    @Lob
-    private byte[] image;
     private String nickName;
     private String password;
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] avatar;
 
     public User() {}
 
-    public User(String name, String surname1, String surname2, String password, String nickName, String email, byte[] image) {
+    public User(String name, String surname1, String surname2, String password, String nickName, String email, byte[] avatar) {
         this.name = name;
         this.surname1 = surname1;
         this.surname2 = surname2;
         this.password = password;
         this.nickName = nickName;
         this.email = email;
-        this.image = image;
+        this.avatar = avatar;
     }
 
     /* Propiedades de la entidad: atributos con sus métodos getter y setter */
@@ -70,12 +77,12 @@ public class User {
         this.email = email;
     }
 
-    public byte[] getImage() {
-        return image;
+    public byte[] getAvatar() {
+        return avatar;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setAvatar(byte[] avatar) {
+        this.avatar = avatar;
     }
 
     public String getNickName() {
@@ -105,6 +112,6 @@ public class User {
                 + "email: " + this.email + " "
                 + "nickName: " + this.nickName + " "
                 + "password: " + this.password
-                + "image: " + Arrays.toString(this.image);
+                + "image: " + Arrays.toString(this.avatar);
     }
 }

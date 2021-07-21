@@ -36,6 +36,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/users/signUp").permitAll()
                 .antMatchers(HttpMethod.POST, "/users/{userId}/changePassword").permitAll()
                 .antMatchers(HttpMethod.PUT, "/users/{userId}/updateProfile").permitAll()
+                .antMatchers(HttpMethod.GET, "/users/{userId}/avatar").permitAll()
+                .antMatchers(HttpMethod.POST, "/users/{userId}/avatar").permitAll()
                 .anyRequest().denyAll();
 
     }

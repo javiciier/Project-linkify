@@ -129,7 +129,7 @@ public class UserServiceTest {
         // Crea al usuario, obtiene su contraseña y la modifica
         User user = createUser(TESTING_USER_NICKNAME);
         String originalPassword = user.getPassword();
-        String fakePassword = originalPassword + "HOLAHOLA";
+        String fakePassword = originalPassword + "Fake";
 
         // Registra al usuario y prueba a cambiar la contraseña
         userService.signUp(user);
@@ -151,7 +151,7 @@ public class UserServiceTest {
         user.setSurname1("New" + user.getSurname1());
         user.setSurname2("New" + user.getSurname2());
         user.setEmail("new" + user.getEmail());
-        user.setImage(new byte[user.getImage().length]);
+        user.setAvatar(new byte[user.getAvatar().length]);
         user.setNickName("new" + user.getNickName());
         user.setPassword("new" + user.getPassword());
         userService.updateProfile(user);
