@@ -12,11 +12,11 @@ public class UserDto {
     private String password;
     private String nickName;
     private String email;
-    private byte[] image;
+    private String avatar;
 
     public UserDto() {}
 
-    public UserDto(Long id, String name, String surname1, String surname2, String password, String nickName, String email, byte[] image) {
+    public UserDto(Long id, String name, String surname1, String surname2, String password, String nickName, String email, String avatar) {
         this.id = id;
         this.name = name;
         this.surname1 = surname1;
@@ -24,7 +24,7 @@ public class UserDto {
         this.password = password;
         this.nickName = nickName;
         this.email = email;
-        this.image = image;
+        this.avatar = avatar;
     }
 
     public Long getId() {
@@ -93,12 +93,12 @@ public class UserDto {
         this.email = email;
     }
 
-    public byte[] getImage() {
-        return image;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
 }

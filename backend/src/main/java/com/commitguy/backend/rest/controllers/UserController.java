@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.net.URISyntaxException;
+import java.util.Base64;
 
 @RestController
 @RequestMapping("/users")
@@ -81,7 +81,7 @@ public class UserController {
                 userDto.getPassword(),
                 userDto.getNickName(),
                 userDto.getEmail(),
-                userDto.getImage());
+                userDto.getAvatar());
         updatedUser = userService.updateProfile(updatedUser);
 
         return UserDtoConversor.toUserDto(updatedUser);
@@ -166,18 +166,19 @@ public class UserController {
         - https://www.section.io/engineering-education/working-with-images-in-spring-boot/
         - https://zetcode.com/springboot/serveimage/
     */
-    @GetMapping("/{userId}/avatar")
+    @GetMapping(value = "/{userId}/avatar",
+            produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<byte[]> getAvatar(@PathVariable Long userId)
+    public ResponseEntity<String> getAvatar(@PathVariable Long userId)
             throws NonExistentUserException {
         try {
         // Obtiene los datos de la imagen del usuario
-        byte[] imageBytes = userService.getAvatar(userId);
+        String b64Avatar = userService.getAvatar(userId);
 
         // Crea la respuesta
         return ResponseEntity.ok()
                     .contentType(MediaType.IMAGE_JPEG)
-                    .body(imageBytes);
+                    .body(b64Avatar);
         } catch (Exception exc) {
             return ResponseEntity.notFound().build();
         }

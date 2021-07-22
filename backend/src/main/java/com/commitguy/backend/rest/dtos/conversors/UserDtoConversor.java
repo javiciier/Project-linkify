@@ -32,7 +32,7 @@ public class UserDtoConversor {
                 dto.getPassword(),
                 dto.getNickName(),
                 dto.getEmail(),
-                dto.getImage());
+                dto.getAvatar());
 
         return user;
     }

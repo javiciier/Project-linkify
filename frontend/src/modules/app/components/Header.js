@@ -103,6 +103,14 @@ const Header = () => {
                     transformOrigin={menuTransformOrigin}
                 >
                     <MenuItem onClick={() => setMenuOpen(false)}>
+                        <Link to="/users/profile"
+                            className={styles.link}
+                        >
+                            Ver perfil
+                        </Link>
+                    </MenuItem>
+
+                    <MenuItem onClick={() => setMenuOpen(false)}>
                         <Link to="/users/change-password"
                             className={styles.link}
                         >

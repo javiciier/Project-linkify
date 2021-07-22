@@ -55,7 +55,7 @@ public interface UserService {
      * @param userId Usuario que tiene la imagen
      * @return Imagen del usuario
      */
-    public byte[] getAvatar(Long userId) throws NonExistentUserException;
+    public String getAvatar(Long userId) throws NonExistentUserException;
 
 
     /**

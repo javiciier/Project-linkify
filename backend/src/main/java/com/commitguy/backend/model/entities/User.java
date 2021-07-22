@@ -20,11 +20,11 @@ public class User {
     private String password;
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    private byte[] avatar;
+    private String avatar;
 
     public User() {}
 
-    public User(String name, String surname1, String surname2, String password, String nickName, String email, byte[] avatar) {
+    public User(String name, String surname1, String surname2, String password, String nickName, String email, String avatar) {
         this.name = name;
         this.surname1 = surname1;
         this.surname2 = surname2;
@@ -77,11 +77,11 @@ public class User {
         this.email = email;
     }
 
-    public byte[] getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(byte[] avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 
@@ -112,6 +112,6 @@ public class User {
                 + "email: " + this.email + " "
                 + "nickName: " + this.nickName + " "
                 + "password: " + this.password
-                + "image: " + Arrays.toString(this.avatar);
+                + "avatar: " + this.avatar;
     }
 }

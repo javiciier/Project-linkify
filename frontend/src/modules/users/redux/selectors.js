@@ -37,3 +37,7 @@ export const getNickname = (state) =>
  */
 export const getName = (state) =>
     isLoggedIn(state) ? getUser(state).user.name : null;
+
+
+export const getAvatar = (state) =>
+    isLoggedIn(state) ? getUser(state).user.avatar : 'no avatar found';

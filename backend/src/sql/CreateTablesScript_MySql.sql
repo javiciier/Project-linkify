@@ -10,7 +10,7 @@ CREATE TABLE User (
     surname1        VARCHAR(50) NOT NULL,       /* Primer apellido */
     surname2        VARCHAR(50),                /* Segundo apellido */
     email           VARCHAR(60) NOT NULL,
-    avatar          LONGBLOB,                           /* Foto de perfil */
+    avatar          LONGBLOB,                   /* Foto de perfil */
     nickName        VARCHAR(60) NOT NULL,       /* Nombre de usuario */
     password        VARCHAR(60) NOT NULL,       /* Contraseña */
 

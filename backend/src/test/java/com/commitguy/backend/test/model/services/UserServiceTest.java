@@ -24,7 +24,7 @@ public class UserServiceTest {
 
     /* ******************** MÉTODOS AUXILIARES ******************** */
     private User createUser(String nickName) {
-        return new User("user1", "surname1", "surname2", "password", nickName, nickName+"@email.com", new byte[1]);
+        return new User("user1", "surname1", "surname2", "password", nickName, nickName+"@email.com", "");
     }
 
     /* ************************** TESTS ************************** */
@@ -151,7 +151,7 @@ public class UserServiceTest {
         user.setSurname1("New" + user.getSurname1());
         user.setSurname2("New" + user.getSurname2());
         user.setEmail("new" + user.getEmail());
-        user.setAvatar(new byte[user.getAvatar().length]);
+        user.setAvatar("new" + user.getAvatar());
         user.setNickName("new" + user.getNickName());
         user.setPassword("new" + user.getPassword());
         userService.updateProfile(user);

@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.Optional;
 
 @Service
@@ -109,7 +110,7 @@ public class UserServiceImpl implements UserService {
     /* Más info: https://www.section.io/engineering-education/working-with-images-in-spring-boot/ */
     @Transactional(readOnly = true)
     @Override
-    public byte[] getAvatar(Long userId) throws NonExistentUserException {
+    public String getAvatar(Long userId) throws NonExistentUserException {
         // Busca al usuario en la BD
         User user = permissionChecker.fetchUser(userId);
 
@@ -122,18 +123,21 @@ public class UserServiceImpl implements UserService {
     public void setAvatar(Long userId, MultipartFile imageFile) throws NonExistentUserException {
         // Busca al usuario en la BD
         User user = permissionChecker.fetchUser(userId);
-
-        // Obtiene los datos de la imagen
         byte [] imageBytes = null;
+        String b64EncodedImageString = null;
+
         try {
+            // Obtiene los datos de la imagen
             imageBytes = imageFile.getBytes();
+            b64EncodedImageString = Base64.getEncoder().encodeToString(imageBytes);
+
         } catch (IOException io) {
             System.out.println("Error procesando imagen");
             System.out.println(io.getMessage());
         }
 
         // Guarda los datos de la imagen
-        user.setAvatar(imageBytes);
+        user.setAvatar(b64EncodedImageString);
         userDao.save(user);
     }
 }
