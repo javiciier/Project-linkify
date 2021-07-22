@@ -58,13 +58,13 @@ const Signup = () => {
     /* ************************************ FUNCIONES ************************************ */
     const checkPasswordsMatch = () => {
         if (password !== confirmPassword) {
-            console.log(typeof(confirmPasswordField));
             setPasswordsMatch(false);
             return false;
         } else {
             return true;
         }
     }
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -85,11 +85,13 @@ const Signup = () => {
                 setBackendErrors(error);
             }
             let onUnauthorized = () => {
+                history.push('/login');
                 dispatch(actions.logout())
-                history.push('/users/login');
             }
 
             dispatch(actions.signUp(userInfo, onSuccess, onError, onUnauthorized));
+        } else {
+            setBackendErrors(null);
         }
     }
 

@@ -61,7 +61,7 @@ const Login = () => {
                 setBackendErrors(errors);
             }
             let onUnauthorized = () => {
-                history.push('/users/login');
+                history.push('/login');
                 dispatch(actions.logout());
                 dispatch(app.actions.error(
                     new PermissionError('No autorizado para realizar esta operación').toObject())

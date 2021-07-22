@@ -1,4 +1,4 @@
-import {useState, createRef} from 'react';
+import {useState, createRef, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {Link, NavLink} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
@@ -65,9 +65,11 @@ const Header = () => {
     const nickName = useSelector(users.selectors.getNickname);
     const isLoggedIn = useSelector(users.selectors.isLoggedIn);
     let buttonRef = createRef(null);
-
     
     /* ************************************ FUNCIONES ************************************ */
+    useEffect( () => {}, [nickName])
+    
+    
     const showUserActions = () => {
         const handleButtonClick = () => {
             setMenuOpen(true);
@@ -117,7 +119,7 @@ const Header = () => {
                     </MenuItem>
 
                     <MenuItem onClick={() => setMenuOpen(false)}>
-                        <Link href="#" to="/users/logout"
+                        <Link href="#" to="/logout"
                             className={styles.link}
                         >
                             Desconectar
@@ -128,7 +130,7 @@ const Header = () => {
         )
     }
 
-    const showNotLoggedInActions = () => {
+    /* const showNotLoggedInActions = () => {
         return (
             <div className="nonUserActions">
                 <List className={styles.userActions}>
@@ -146,7 +148,7 @@ const Header = () => {
                 </List>
             </div>
         )
-    }
+    } */
 
     /* ************************************ COMPONENTE ************************************ */
     return (

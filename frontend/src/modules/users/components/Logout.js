@@ -17,7 +17,9 @@ const useStyles = makeStyles(() => ({
         margin: '5%',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
+        background: 'transparent',
+        textAlign: 'center'
     }
 }));
 
@@ -34,7 +36,7 @@ const Logout = () => {
     const styles = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const msDelay = 3*1000;
+    const msDelay = 1*1000;
 
     useEffect(() => {
         dispatch(actions.logout());

@@ -58,7 +58,7 @@ export const logout = () =>
  */
 export const signUp = (user, onSuccessCallback, onErrorCallback, onUnauthorizedCallback) =>
     dispatch => {
-        let onSuccess = (signedUpUser) => {
+        let onSuccess = async (signedUpUser) => {
             dispatch(signedUpCompleted(signedUpUser));
             onSuccessCallback();
         }

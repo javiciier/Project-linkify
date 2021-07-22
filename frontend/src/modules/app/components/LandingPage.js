@@ -47,7 +47,7 @@ const LandingPage = () => {
             <Login/>
             <h4 className={styles.createAccountText}>
                 ¿Todavía no tienes una cuenta?
-                <Link to='/users/signup'>
+                <Link to='/signup'>
                     Crea tu cuenta
                 </Link>
             </h4>
