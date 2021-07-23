@@ -67,18 +67,19 @@ export const configFetchParameters = (method, body) => {
 /**
  * Obtiene el Json Web Token del navegador.
  */
-export const getUserJWT = () => sessionStorage.getItem(JWT_NAME);
+export const getUserJWT = () => localStorage.getItem(JWT_NAME);
 
 /**
  * Almacena en el navegador el Json Web Token recibido.
  * @param {String} token - JWT recibido
  */
-export const setUserJWT = (token) => sessionStorage.setItem(JWT_NAME, token);
+
+export const setUserJWT = (token) => localStorage.setItem(JWT_NAME, token);
 
 /**
  * Elimina del navegador el Json Web Token almacenado.
  */
-export const removeUserJWT = () => sessionStorage.removeItem(JWT_NAME);
+export const removeUserJWT = () => localStorage.removeItem(JWT_NAME);
 
 
 /* ****************************************** HANDLERS ****************************************** */

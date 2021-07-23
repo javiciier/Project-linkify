@@ -1,5 +1,6 @@
 import {makeStyles} from '@material-ui/core';
 import { useSelector } from 'react-redux';
+import { ProfilePicture } from '..';
 
 import users from '..';
 
@@ -13,7 +14,7 @@ const useStyles = makeStyles( () => ({
     },
     homeText: {
         margin: '5%',
-        fontSize: '5vw'
+        fontSize: '5vw',
     }
 
 }));
@@ -27,7 +28,6 @@ const LandingPage = () => {
     const styles = useStyles();
 
     const user = useSelector(users.selectors.getName);
-    const avatar = useSelector(users.selectors.getAvatar);
 
 
     return (
@@ -35,11 +35,6 @@ const LandingPage = () => {
             <h2 className={styles.homeText}>
                 Bienvenido {user}
             </h2>
-
-            <p>
-                Tu foto de perfil:
-            </p>
-            <img src={`data:image/jpeg;base64,${avatar}`} />
         </div>
     )
 };

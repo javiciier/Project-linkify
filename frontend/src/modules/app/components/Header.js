@@ -4,7 +4,7 @@ import {Link, NavLink} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import 'fontsource-roboto';
 
-import users from '../../users';
+import users, { ProfilePicture } from '../../users';
 
 import { AppBar, Toolbar, Typography, List, ListItem, Menu, MenuItem, Button } from '@material-ui/core';
 
@@ -31,7 +31,13 @@ const useStyles = makeStyles( () => ({
     },
     userButton: {
         fontWeight: 'bold',
+        fontSize: '1rem',
         color: '#004A7C',
+        border: '3px groove darkblue',
+        backgroundColor: '#E8F1F5'
+    },
+    menuButtonText: {
+        margin: '0% 5% 0% 5%',
     },
     link: {
         color: '#005691',
@@ -89,8 +95,11 @@ const Header = () => {
                     variant="outlined"
                     onClick={handleButtonClick}
                     ref={buttonRef}
-                    >
-                    {nickName}
+                >
+                    <ProfilePicture />
+                    <div className={styles.menuButtonText}>
+                        {nickName}
+                    </div>
                 </Button>
 
                 <Menu
