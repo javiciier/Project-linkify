@@ -11,23 +11,15 @@ const useStyles = makeStyles( () => ({
         flexDirection: 'column',
         alignItems: 'center'
     },
-    homeText: {
-        margin: '5%',
-        fontSize: '5vw',
-    },
-    user: {
-        color: 'blue',
-        fontSize: '10vw'
-    }
 
 }));
 
 
 /* ************************************ COMPONENTE ************************************ */
 /**
- * Pantalla de bienvenida
+ * Pantalla con información del usuario
  */
-const LandingPage = () => {
+const Profile = () => {
     const styles = useStyles();
 
     const user = useSelector(users.selectors.getName);
@@ -35,12 +27,10 @@ const LandingPage = () => {
 
     return (
         <div className={styles.component}>
-            <div className={styles.homeText}>
-                Bienvenido, <span className={styles.user}> {user} </span>
-            </div>
+            <h2>{user}</h2>
         </div>
     )
 };
 
 
-export default LandingPage;
+export default Profile;

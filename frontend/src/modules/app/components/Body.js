@@ -6,8 +6,7 @@ import users from '../../users';
 
 import {AppStatusDialog} from '../../common'
 import LandingPage from './LandingPage';
-import {Login, Logout, Signup, Home} from '../../users';
-import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
+import {Login, Logout, Signup, Home, Profile} from '../../users';
 
 
 /* ************************************ ESTILOS (CSS) ************************************ */
@@ -33,10 +32,15 @@ const Body = () => {
             <AppStatusDialog/>
             <br/>
             <Switch>
-                {!loggedIn && <Route exact path="/"><LandingPage/></Route>}
+                {/* Rutas sin autorización */}
+                {!loggedIn && <Route exact path="/"> <LandingPage/> </Route>}
                 {!loggedIn && <Route exact path="/login"> <Login/> </Route>}
                 {!loggedIn && <Route exact path="/signup"> <Signup/> </Route>}
+
+                {/* Rutas con autorización */}
                 {loggedIn && <Route exact path="/"> <Home/> </Route>}
+                {loggedIn && <Route exact path="/users/profile"> <Profile/> </Route>}
+
                 <Route exact path="/logout"> <Logout/> </Route>
             </Switch>
         </div>

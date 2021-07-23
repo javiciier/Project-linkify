@@ -8,7 +8,7 @@ import '@fortawesome/fontawesome-free/css/fontawesome.css';
 /* Servicios */
 import {Provider} from 'react-redux';
 import configureStore from './redux';
-import backend from './backend';
+import backend, { PermissionError } from './backend';
 import {ServiceError} from './backend';
 import app from './modules/app';
 import users from './modules/users';
@@ -29,7 +29,7 @@ backend.setDefaultServiceError( () =>
 
 
 const main = () => {
-    store.dispatch(users.actions.loginFromToken());
+    store.dispatch(users.actions.loginFromToken(new PermissionError('JWT inválido')));
 
     ReactDOM.render(
         <Provider store={store}>

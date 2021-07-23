@@ -1,8 +1,8 @@
-import { useSelector } from "react-redux";
-import PropTypes from 'prop-types';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
-import { Avatar } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core";
+import { Avatar } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
 import users from '..';
 
@@ -22,21 +22,26 @@ const useStyles = makeStyles( (theme) => ({
 */
 const ProfilePicture = () => {
     const styles = useStyles();
-    const image = useSelector(users.selectors.getAvatar);
+    const avatar = useSelector(users.selectors.getAvatar);
     const userName = useSelector(users.selectors.getName);
+    const userID = useSelector(users.selectors.getUserId);
 
 
     /* ************************************ FUNCIONES ************************************ */
-    
+    useEffect( () => {
+        const image = users.actions.getAvatar(userID);
+        users.actions.setAvatar(image);
+    }, [avatar])
+
 
     /* ************************************ COMPONENTE ************************************ */
     return (
         <Avatar 
-            src={`data:image/jpeg;base64,${image}`}
+            src={ (avatar) ? `data:image/jpeg;base64,${avatar}` : '' }
             className={styles.avatar}
         >
             {/* En caso de no existir imagen, muestra la primera letra del nombre */}
-            {userName.charAt(0)}
+            {userName[0]}
         </Avatar>
     )
 }

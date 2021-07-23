@@ -118,3 +118,46 @@ export const changePassword = (id, oldPassword, newPassword, onSuccessCallback, 
     // Llamada al servicio
     backendFetch(changePasswordEndpoint, fetchConfig, onSuccessCallback, onErrorCallback);
 }
+
+
+/**
+ * Obtiene el avatar (imagen de perfil) del usuario recibido.
+ * @param {Number} id - Id del usuario
+ * @param {*} onSuccess - Función a ejecutar en caso de éxito
+ * @param {*} onErrorCallback - Función a ejecutar en caso de error
+ * @param {*} onUnauthorizedCallback - Función a ejecutar en caso de no estar autorizado
+ */
+export const getAvatar = (id, onSuccessCallback, onErrorCallback, onUnauthorizedCallback) => {
+    // Parámetros de la petición
+    const getAvatarEndpoint = `${USER_ENDPOINT}/${id}/avatar`;
+    let fetchConfig = configFetchParameters('GET');
+    let onSuccess = (avatar) => {
+        setOnUnauthorizedErrorCallback(onUnauthorizedCallback);
+        onSuccessCallback(avatar);
+    }
+
+    // Llamada al servicio
+    backendFetch(getAvatarEndpoint, fetchConfig, onSuccess, onErrorCallback)
+}
+
+
+/**
+ * Modifica el avatar (imagen de perfil) del usuario recibido con la imagen recibida.
+ * @param {*} id - Id del usuario
+ * @param {*} avatar - Datos de la nueva imagen
+ * @param {*} onSuccess - Función a ejecutar en caso de éxito
+ * @param {*} onErrorCallback - Función a ejecutar en caso de error
+ * @param {*} onUnauthorizedCallback - Función a ejecutar en caso de no estar autorizado
+ */
+export const setAvatar = (id, avatar, onSuccessCallback, onErrorCallback, onUnauthorizedCallback) => {
+    // Parámetros de la peticion
+    const setAvatarEndpoint = `${USER_ENDPOINT}/${id}/avatar`;
+    let fetchConfig = configFetchParameters('POST', {'imageFile': avatar});
+    let onSuccess = (avatar) => {
+        setOnUnauthorizedErrorCallback(onUnauthorizedCallback);
+        onSuccessCallback(avatar);
+    }
+
+    // Llamada al servicio
+    backendFetch(setAvatarEndpoint, fetchConfig, onSuccess, onErrorCallback);
+}

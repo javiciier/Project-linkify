@@ -30,7 +30,7 @@ export const loginFromToken = (onUnauthorizedCallback) =>
     dispatch => {
         let onSuccess = (loggedInUser) => {
             if (loggedInUser)
-                dispatch(loginCompleted(loggedInUser));
+                dispatch(loginUsingTokenCompleted(loggedInUser));
         }
         
         backend.userService.loginFromToken(onSuccess, onUnauthorizedCallback);
@@ -58,8 +58,8 @@ export const logout = () =>
  */
 export const signUp = (user, onSuccessCallback, onErrorCallback, onUnauthorizedCallback) =>
     dispatch => {
-        let onSuccess = async (signedUpUser) => {
-            dispatch(signedUpCompleted(signedUpUser));
+        let onSuccess = (signedUpUser) => {
+            dispatch(signUpCompleted(signedUpUser));
             onSuccessCallback();
         }
 
@@ -84,9 +84,55 @@ export const updateProfile = (user, onSuccessCallback, onErrorCallback) =>
     }
 
 
+/**
+ * Acción para cambiar la contraseña del usuario.
+ * @param {Number} userId - Id del usuario
+ * @param {String} oldPassword - Antigua contraseña
+ * @param {String} newPassword - Nueva contraseña
+ * @param {Function} onSuccessCallback - Función a ejecutar en caso de actualización exitosa
+ * @param {Function} onErrorCallback - Función a ejecutar en caso de error
+ */
 export const changePassword = (userId, oldPassword, newPassword, onSuccessCallback, onErrorCallback) => {
     backend.userService.changePassword(userId, oldPassword, newPassword, onSuccessCallback, onErrorCallback);
 }
+
+
+/**
+ * Obtiene la imagen de perfil (avatar) del usuario.
+ * @param {*} userId - Id del usuario 
+ * @param {*} onSuccessCallback - Función a ejecutar en caso de éxito
+ * @param {*} onErrorCallback - Función a ejecutar en caso de error
+ * @param {*} onUnauthorizedCallback - Función a ejecutar en caso de permisos insuficientes
+ */
+export const getAvatar = (userId, onSuccessCallback, onErrorCallback, onUnauthorizedCallback) =>
+    dispatch => {
+        let onSuccess = (avatar) => {
+            dispatch(getAvatarCompleted(avatar));
+            onSuccessCallback();
+        }
+
+        backend.userService.getAvatar(userId, onSuccess, onErrorCallback, onUnauthorizedCallback);
+}
+
+
+/**
+ * Establece una nueva imagen de perfil (avatar) del usuario.
+ * @param {Number} userId - Id del usuario 
+ * @param {String} avatar - String de la nueva imagen en Base64
+ * @param {Function} onSuccessCallback - Función a ejecutar en caso de éxito
+ * @param {Function} onErrorCallback - Función a ejecutar en caso de error
+ * @param {Function} onUnauthorizedCallback - Función a ejecutar en caso de permisos insuficientes
+ */
+ export const setAvatar = (userId, avatar, onSuccessCallback, onErrorCallback, onUnauthorizedCallback) =>
+    dispatch => {
+        let onSuccess = (avatar) => {
+            dispatch(setAvatarCompleted(avatar));
+            onSuccessCallback();
+        }
+
+        backend.userService.setAvatar(userId, avatar, onSuccess, onErrorCallback, onUnauthorizedCallback);
+}
+
 
 /* ****************************************** ACCIONES ****************************************** */
 /**
@@ -96,6 +142,17 @@ export const changePassword = (userId, oldPassword, newPassword, onSuccessCallba
  */
 const loginCompleted = (loggedInUser) => ({
     type: actionTypes.LOGIN_COMPLETED,
+    loggedInUser
+})
+
+
+/**
+ * Devuelve una acción para indicar que se ha completado el login a partir del JWT.
+ * @param {Object} loggedInUser - Datos del usuario 
+ * @returns {Object} - Tipo de la acción y datos del usuario.
+ */
+ const loginUsingTokenCompleted = (loggedInUser) => ({
+    type: actionTypes.LOGIN_USING_TOKEN_COMPLETED,
     loggedInUser
 })
 
@@ -113,7 +170,7 @@ const logoutCompleted = () => ({
  * Devuelve una acción para indicar que se ha registrado un nuevo usuario.
  * @returns {Object} - Tipo de la acción y datos del nuevo usuario
  */
-const signedUpCompleted = (signedUpUser) => ({
+const signUpCompleted = (signedUpUser) => ({
     type: actionTypes.SIGN_UP_COMPLETED,
     signedUpUser
 })
@@ -126,4 +183,24 @@ const signedUpCompleted = (signedUpUser) => ({
 const updateProfileCompleted = (updatedUser) => ({
     type: actionTypes.UPDATE_PROFILE_COMPLETED,
     updatedUser
+})
+
+
+/**
+ * Devuelve una acción con el avatar del usuario.
+ * @returns {String} - Tipo de la acción y avatar del usuario en Base64
+ */
+const getAvatarCompleted = (avatar) => ({
+    type: actionTypes.GET_AVATAR_COMPLETED,
+    avatar
+})
+
+
+/**
+ * Devuelve una acción con el nuevo avatar del usuario.
+ * @returns {String} - Tipo de la acción y nuevo avatar del usuario en Base64
+ */
+ const setAvatarCompleted = (avatar) => ({
+    type: actionTypes.SET_AVATAR_COMPLETED,
+    avatar
 })

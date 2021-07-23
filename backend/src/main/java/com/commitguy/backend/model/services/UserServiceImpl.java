@@ -65,7 +65,6 @@ public class UserServiceImpl implements UserService {
 
         // Guardar el usuario en la BBDD
         userDao.save(newUser);
-        System.out.println("Creado nuevo usuario " + newUser.getNickName());
     }
 
 

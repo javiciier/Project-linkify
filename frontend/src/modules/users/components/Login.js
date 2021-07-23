@@ -57,8 +57,8 @@ const Login = () => {
         if (loginForm.checkValidity()) {
             let onSuccess = () => history.push('/');
             let onError = (errors) => {
-                console.log(errors);
                 setBackendErrors(errors);
+
             }
             let onUnauthorized = () => {
                 history.push('/login');

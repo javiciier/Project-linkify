@@ -5,7 +5,7 @@ import {useHistory} from 'react-router';
 import * as actions from '../redux/actions';
 
 import { ErrorAlert } from '../../common';
-import {Container, Card, CardContent, CardActions, Typography, TextField, Button, FormControl} from '@material-ui/core';
+import {Container, Card, CardContent, CardActions, Typography, TextField, Button, FormControl, Input} from '@material-ui/core';
 import {Alert} from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core';
 
@@ -48,12 +48,12 @@ const Signup = () => {
     const [surname2, setSurname2] = useState('');
     const [nickName, setNickname] = useState('');
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');                         // Contraseña del usuario
+    const [password, setPassword] = useState('');                           // Contraseña del usuario
     const [confirmPassword, setConfirmPassword] = useState('');             // Contraseña de confirmación
-    const [passwordsMatch, setPasswordsMatch] = useState(true);          // Indica si contraseña original y de confirmación coinciden
+    const [passwordsMatch, setPasswordsMatch] = useState(true);             // Indica si contraseña original y de confirmación coinciden
+    const [avatar, setAvatar] = useState('');                               // Imagen que introduce el usuario
     const [backendErrors, setBackendErrors] = useState(null);
     let signupForm;
-    let confirmPasswordField;
     
     /* ************************************ FUNCIONES ************************************ */
     const checkPasswordsMatch = () => {
@@ -65,6 +65,28 @@ const Signup = () => {
         }
     }
 
+    const handleAvatarInput = (e) => {
+        /* INFO:
+            - https://www.geeksforgeeks.org/how-to-convert-image-into-base64-string-using-javascript/
+            - https://developer.mozilla.org/es/docs/Web/API/FileReader/readAsDataURL
+        */
+        e.preventDefault();
+        
+        // Extraer la imagen
+        const image = e.target.files[0];
+
+        // Convertir imagen a Base64 cuando se cargue el fichero
+        const reader = new FileReader();
+        reader.onload = () => {
+            let b64String = reader.result
+                                .replace('data:', '')
+                                .replace(RegExp(/^.+,/,), '');
+            setAvatar(b64String)
+        }
+        
+        // Leer y guardar la imagen en el estado del formulario
+        reader.readAsDataURL(image);
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -77,6 +99,7 @@ const Signup = () => {
                 nickName: nickName.trim(),
                 email: email.trim(),
                 password: password,
+                avatar: avatar
             }
             let onSuccess = () => {
                 history.push('/');
@@ -149,9 +172,9 @@ const Signup = () => {
                         />
 
                         <TextField
-                            id="nickname-input"
+                            id="nickName-input"
                             type="text"
-                            name="name"
+                            name="nickName"
                             label="Nombre de usuario"
                             required
                             fullWidth
@@ -162,7 +185,7 @@ const Signup = () => {
                         <TextField
                             id="email-input"
                             type="text"
-                            name="name"
+                            name="email"
                             label="Correo electrónico"
                             required
                             fullWidth
@@ -173,7 +196,7 @@ const Signup = () => {
                         <TextField
                             id="password-input"
                             type="text"
-                            name="name"
+                            name="password"
                             label="Contraseña"
                             required
                             fullWidth
@@ -181,22 +204,32 @@ const Signup = () => {
                             onChange={(e) => setPassword(e.target.value)}
                         />
 
-                        {!passwordsMatch && <Alert severity="error">
-                            Las contraseñas no coinciden
-                        </Alert>}
+                        {!passwordsMatch &&
+                            <Alert severity="error">
+                                Las contraseñas no coinciden
+                            </Alert>}
+
                         <TextField
                             id="passwordConfirmation-input"
                             type="text"
-                            name="name"
+                            name="passwordConfirmation"
                             label="Vuelva a introducir la contraseña"
                             required
                             fullWidth
                             margin="normal"
-                            ref={(node) => confirmPasswordField = node}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                         />
 
-                        {/* TODO: FALTA CAMPO PARA INTRODUCIR IMAGEN (Y TAMBIÉN SU USESTATE()) */}
+                        {/* TODO: Crear un styled component con esto */}
+                        <Input
+                            id="avatar-input"
+                            type="file"
+                            accept="image/*"
+                            name="avatar"
+                            label="Añadir una imagen"
+                            margin="normal"
+                            onChange={(e) => handleAvatarInput(e)}
+                        />
 
                         </FormControl>
                     </CardContent>

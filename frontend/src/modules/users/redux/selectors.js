@@ -12,10 +12,16 @@ const isEmpty = (obj) => {
 const getUsersState = (state) => state.users;
 
 /**
- * Obtiene el usuario loggeado en el sistema actualmente 
+ * Obtiene los datos del usuario recibidos por el backend 
  * @returns Usuario loggeado en el sistema
  */
 export const getUser = (state) => getUsersState(state).user;
+
+/**
+ * Obtiene los datos del usuario con la sesión iniciada actualmente.
+ * @returns 
+ */
+export const getUserData = (state) => getUser(state).user;
 
 /**
  * Comprueba si el usuario tiene sesión iniciada
@@ -24,20 +30,23 @@ export const getUser = (state) => getUsersState(state).user;
 export const isLoggedIn = (state) => !isEmpty(getUser(state));
 
 
+export const getUserId = (state) => getUserData(state)?.id;
+
 /**
  * Obtiene el apodo del usuario.
  * @returns String con el nickname del usuario (o null si no está loggeado)
  */
-export const getNickname = (state) =>
-    isLoggedIn(state) ? getUser(state).user.nickName : null;
+export const getNickname = (state) => {
+    return isLoggedIn(state) ? getUserData(state)?.nickName : '!';
+}
 
 /**
  * Obtiene el nombre del usuario.
  * @returns String con el nombre del usuario (o null si no está loggeado)
  */
 export const getName = (state) =>
-    isLoggedIn(state) ? getUser(state).user.name : null;
+    isLoggedIn(state) ? getUserData(state)?.name : '!';
 
 
 export const getAvatar = (state) =>
-    isLoggedIn(state) ? getUser(state).user.avatar : 'no avatar found';
+    isLoggedIn(state) ? getUserData(state)?.avatar : '!';

@@ -1,12 +1,12 @@
 import {useState, createRef, useEffect} from 'react';
 import {useSelector} from 'react-redux';
-import {Link, NavLink} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import 'fontsource-roboto';
 
 import users, { ProfilePicture } from '../../users';
 
-import { AppBar, Toolbar, Typography, List, ListItem, Menu, MenuItem, Button } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, Menu, MenuItem, Button } from '@material-ui/core';
 
 /* ************************************ ESTILOS (CSS) ************************************ */
 const useStyles = makeStyles( () => ({
@@ -33,7 +33,6 @@ const useStyles = makeStyles( () => ({
         fontWeight: 'bold',
         fontSize: '1rem',
         color: '#004A7C',
-        border: '3px groove darkblue',
         backgroundColor: '#E8F1F5'
     },
     menuButtonText: {
@@ -68,14 +67,16 @@ const Header = () => {
     const styles = useStyles();
     const [menuAnchorEl, setMenuAnchorEl] = useState(null);         // Elemento al que está anclado el menú
     const [shouldMenuOpen, setMenuOpen] = useState(false);
-    const nickName = useSelector(users.selectors.getNickname);
+    let nickName = useSelector(users.selectors.getNickname);
     const isLoggedIn = useSelector(users.selectors.isLoggedIn);
     let buttonRef = createRef(null);
     
     /* ************************************ FUNCIONES ************************************ */
-    useEffect( () => {}, [nickName])
-    
-    
+    useEffect( () => {
+
+    }, [isLoggedIn])
+
+
     const showUserActions = () => {
         const handleButtonClick = () => {
             setMenuOpen(true);
@@ -98,7 +99,7 @@ const Header = () => {
                 >
                     <ProfilePicture />
                     <div className={styles.menuButtonText}>
-                        {nickName}
+                        {nickName ? nickName : ''}
                     </div>
                 </Button>
 
@@ -146,26 +147,6 @@ const Header = () => {
             </>
         )
     }
-
-    /* const showNotLoggedInActions = () => {
-        return (
-            <div className="nonUserActions">
-                <List className={styles.userActions}>
-                    <ListItem>
-                        <NavLink to="/users/signup" className={styles.navLink}>
-                            <h3>Registrarse</h3>
-                        </NavLink>
-                    </ListItem>
-
-                    <ListItem>
-                        <NavLink to="/users/login" className={styles.navLink}>
-                            <h3>Acceder</h3>
-                        </NavLink>
-                    </ListItem>
-                </List>
-            </div>
-        )
-    } */
 
     /* ************************************ COMPONENTE ************************************ */
     return (
