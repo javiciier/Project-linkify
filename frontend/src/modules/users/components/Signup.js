@@ -4,8 +4,8 @@ import {useHistory} from 'react-router';
 
 import * as actions from '../redux/actions';
 
-import { ErrorAlert } from '../../common';
-import {Container, Card, CardContent, CardActions, Typography, TextField, Button, FormControl, Input} from '@material-ui/core';
+import { ErrorAlert, ImageForm } from '../../common';
+import {Container, Card, CardContent, CardActions, Typography, TextField, Button, FormControl, Input, FormLabel} from '@material-ui/core';
 import {Alert} from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core';
 
@@ -213,22 +213,17 @@ const Signup = () => {
                             id="passwordConfirmation-input"
                             type="text"
                             name="passwordConfirmation"
-                            label="Vuelva a introducir la contraseña"
+                            label="Repite la contraseña"
                             required
                             fullWidth
                             margin="normal"
                             onChange={(e) => setConfirmPassword(e.target.value)}
                         />
 
-                        {/* TODO: Crear un styled component con esto */}
-                        <Input
-                            id="avatar-input"
-                            type="file"
-                            accept="image/*"
-                            name="avatar"
-                            label="Añadir una imagen"
-                            margin="normal"
-                            onChange={(e) => handleAvatarInput(e)}
+                        <ImageForm
+                            formName='avatar-form'
+                            labelText='Agrega tu foto de perfil'
+                            imageHandler={handleAvatarInput}
                         />
 
                         </FormControl>
