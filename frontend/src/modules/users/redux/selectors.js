@@ -36,9 +36,7 @@ export const getUserId = (state) => getUserData(state)?.id;
  * Obtiene el apodo del usuario.
  * @returns String con el nickname del usuario (o null si no está loggeado)
  */
-export const getNickname = (state) => {
-    return isLoggedIn(state) ? getUserData(state)?.nickName : '!';
-}
+export const getNickname = (state) => getUserData(state)?.nickName;
 
 /**
  * Obtiene el nombre del usuario.

@@ -38,13 +38,13 @@ const useStyles = makeStyles( () => ({
  * MÁS INFO:
  *  - https://medium.com/web-dev-survey-from-kyoto/how-to-customize-the-file-upload-button-in-react-b3866a5973d8
  */
-const ImageForm = ({imageHandler, formName, labelText}) => {
+const ImageForm = ({onChangeCallback, formName, labelText}) => {
     const styles = useStyles();
     const [imageB64String, setImageB64String] = useState('');
     let hiddenInput = useRef();
 
     /* ************************************ FUNCIONES ************************************ */
-    const handleClick = (_) => {
+    const handleClick = () => {
         hiddenInput.current.click();
     };
 
@@ -61,6 +61,8 @@ const ImageForm = ({imageHandler, formName, labelText}) => {
             setImageB64String(b64String);
         }
         reader.readAsDataURL(image);
+
+        onChangeCallback();
     }
 
 
@@ -103,7 +105,7 @@ const ImageForm = ({imageHandler, formName, labelText}) => {
 
 
 ImageForm.propTypes = {
-    imageHandler : PropTypes.func,
+    onChangeCallback : PropTypes.func,
     formName : PropTypes.string.isRequired,
     labelText : PropTypes.string,
 }

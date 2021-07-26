@@ -1,5 +1,6 @@
-import {makeStyles} from '@material-ui/core';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import {makeStyles} from '@material-ui/core';
 
 import users from '..';
 
@@ -27,20 +28,20 @@ const useStyles = makeStyles( () => ({
 /**
  * Pantalla de bienvenida
  */
-const LandingPage = () => {
+const Home = () => {
     const styles = useStyles();
-
     const user = useSelector(users.selectors.getName);
+    const [loading, setLoading] = useState(true);
 
 
     return (
         <div className={styles.component}>
             <div className={styles.homeText}>
-                Bienvenido, <span className={styles.user}> {user} </span>
+                <span className={styles.user}> {user} </span>
             </div>
         </div>
     )
 };
 
 
-export default LandingPage;
+export default Home;

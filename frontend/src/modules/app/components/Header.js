@@ -16,6 +16,7 @@ const useStyles = makeStyles( () => ({
         justifyContent: 'space-between',
         flexGrow: 1,
         height: '4em',
+        position: 'fixed'
     },
     appLogo: {
         flex: 1,
@@ -72,10 +73,8 @@ const Header = () => {
     let buttonRef = createRef(null);
     
     /* ************************************ FUNCIONES ************************************ */
-    useEffect( () => {
 
-    }, [isLoggedIn])
-
+    useEffect( () => { }, [nickName]);
 
     const showUserActions = () => {
         const handleButtonClick = () => {
@@ -87,7 +86,6 @@ const Header = () => {
             setMenuOpen(false);
             setMenuAnchorEl(null);
         };
-
 
         return (
             <>

@@ -23,6 +23,9 @@
         <testDataSource.user>${dataSource.user}</testDataSource.user>
         <testDataSource.password>${dataSource.password}</testDataSource.password>
 
+        <!-- Evitar compilar tests -->
+        <maven.test.skip>true</maven.test.skip>
+
     </properties>
 
     <dependencies>
@@ -147,6 +150,8 @@
                     <password>${dataSource.password}</password>
                     <autocommit>true</autocommit>
                     <onError>continue</onError>
+                    <skipTests>${tests.skip}</skipTests>         <!-- Evitar ejecutar tests -->
+
                     <!-- Conjunto de ficheros SQL a ejecutar -->
                     <fileset>
                         <basedir>${basedir}</basedir>
@@ -178,9 +183,6 @@
                             <fileset>
                                 <basedir>${basedir}</basedir>
                                 <includes>
-                                    <include>
-                                        src/sql/${dataSource.createTablesScript}
-                                    </include>
                                     <include>
                                         src/sql/${dataSource.createTablesScript}
                                     </include>

@@ -36,12 +36,15 @@ const ProfilePicture = () => {
 
     /* ************************************ COMPONENTE ************************************ */
     return (
+        
         <Avatar 
             src={ (avatar) ? `data:image/jpeg;base64,${avatar}` : '' }
             className={styles.avatar}
         >
             {/* En caso de no existir imagen, muestra la primera letra del nombre */}
-            {userName[0]}
+            {(userName) ?
+                userName[0]
+                : null}
         </Avatar>
     )
 }

@@ -5,7 +5,7 @@ import {useHistory} from 'react-router';
 import * as actions from '../redux/actions';
 
 import { ErrorAlert, ImageForm } from '../../common';
-import {Container, Card, CardContent, CardActions, Typography, TextField, Button, FormControl, Input, FormLabel} from '@material-ui/core';
+import {Container, Card, CardContent, CardActions, Typography, TextField, Button, FormControl} from '@material-ui/core';
 import {Alert} from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core';
 
@@ -103,6 +103,7 @@ const Signup = () => {
             }
             let onSuccess = () => {
                 history.push('/');
+                window.location.reload();       // Workaround para forzar a redux a actualizar estado
             }
             let onError = (error) => {
                 setBackendErrors(error);
@@ -204,10 +205,7 @@ const Signup = () => {
                             onChange={(e) => setPassword(e.target.value)}
                         />
 
-                        {!passwordsMatch &&
-                            <Alert severity="error">
-                                Las contraseñas no coinciden
-                            </Alert>}
+
 
                         <TextField
                             id="passwordConfirmation-input"
@@ -227,6 +225,9 @@ const Signup = () => {
                         />
 
                         </FormControl>
+
+                        {!passwordsMatch &&
+                        <Alert severity="error">Las contraseñas no coinciden</Alert>}
                     </CardContent>
 
                     <CardActions>

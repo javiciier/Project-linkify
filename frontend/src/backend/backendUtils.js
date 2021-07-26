@@ -126,7 +126,9 @@ const handleOkResponse = (response, onSuccessCallback) => {
   // Si la respuesta contiene algún JSON, se procesa en el callback
   if (isJsonResponse(response)) {
     response.json()
-      .then( (data) => onSuccessCallback(data));
+      .then( (data) => {
+        onSuccessCallback(data)
+      });
   }
 
   return true;

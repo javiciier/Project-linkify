@@ -35,10 +35,8 @@ const useStyles = makeStyles( () => ({
 const LandingPage = () => {
     const styles = useStyles();
 
-
-
+    
     return (
-
         <>
             <div>
                 <h2 className={styles.welcomeText}>Bienvenido a Linkify</h2>
