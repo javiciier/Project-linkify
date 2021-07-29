@@ -9,6 +9,6 @@ export {default as Signup} from './components/Signup';
 export {default as Logout} from './components/Logout';
 export {default as Home} from './components/Home';
 export {default as ProfilePicture} from './components/ProfilePicture';
-export {default as Profile} from './components/Profile';
+export {default as UserProfile} from './components/UserProfile';
 
 export default {actions, actionTypes, reducer, selectors};

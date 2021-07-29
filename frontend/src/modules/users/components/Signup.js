@@ -148,6 +148,7 @@ const Signup = () => {
                             required
                             fullWidth
                             margin="normal"
+                            value={name}
                             onChange={(e) => setName(e.target.value)}
                         />
 
@@ -159,6 +160,7 @@ const Signup = () => {
                             required
                             fullWidth
                             margin="normal"
+                            value={surname1}
                             onChange={(e) => setSurname1(e.target.value)}
                         />
 
@@ -169,6 +171,7 @@ const Signup = () => {
                             label="Segundo apellido"
                             fullWidth
                             margin="normal"
+                            value={surname2}
                             onChange={(e) => setSurname2(e.target.value)}
                         />
 
@@ -180,6 +183,7 @@ const Signup = () => {
                             required
                             fullWidth
                             margin="normal"
+                            value={nickName}
                             onChange={(e) => setNickname(e.target.value)}
                         />
 
@@ -191,6 +195,7 @@ const Signup = () => {
                             required
                             fullWidth
                             margin="normal"
+                            value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
 
@@ -202,6 +207,7 @@ const Signup = () => {
                             required
                             fullWidth
                             margin="normal"
+                            value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
 
@@ -215,6 +221,7 @@ const Signup = () => {
                             required
                             fullWidth
                             margin="normal"
+                            value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                         />
 

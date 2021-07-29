@@ -62,7 +62,7 @@ const ImageForm = ({onChangeCallback, formName, labelText}) => {
         }
         reader.readAsDataURL(image);
 
-        onChangeCallback();
+        if (onChangeCallback) onChangeCallback();
     }
 
 
@@ -87,7 +87,7 @@ const ImageForm = ({onChangeCallback, formName, labelText}) => {
                 { (imageB64String) ?
                     <img
                         className={styles.imgPreview}
-                        src={`data:image/png;base64, ${imageB64String}`}
+                        src={`data:image/*;base64, ${imageB64String}`}
                     />
                     :
                     <Button

@@ -6,7 +6,7 @@ import users from '../../users';
 
 import {AppStatusDialog} from '../../common'
 import LandingPage from './LandingPage';
-import {Login, Logout, Signup, Home, Profile} from '../../users';
+import {Login, Logout, Signup, Home, UserProfile} from '../../users';
 
 
 /* ************************************ ESTILOS (CSS) ************************************ */
@@ -39,7 +39,7 @@ const Body = () => {
 
                 {/* Rutas con autorización */}
                 {loggedIn && <Route exact path="/"> <Home/> </Route>}
-                {loggedIn && <Route exact path="/users/profile"> <Profile/> </Route>}
+                {loggedIn && <Route exact path="/users/profile"> <UserProfile/> </Route>}
 
                 <Route exact path="/logout"> <Logout/> </Route>
             </Switch>

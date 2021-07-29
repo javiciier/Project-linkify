@@ -16,7 +16,8 @@ const useStyles = makeStyles( () => ({
         justifyContent: 'space-between',
         flexGrow: 1,
         height: '4em',
-        position: 'fixed'
+        position: 'sticky',
+        top: '0',
     },
     appLogo: {
         flex: 1,
@@ -97,7 +98,7 @@ const Header = () => {
                 >
                     <ProfilePicture />
                     <div className={styles.menuButtonText}>
-                        {nickName ? nickName : ''}
+                        {nickName ? nickName.substring(0, 12) : ''}
                     </div>
                 </Button>
 

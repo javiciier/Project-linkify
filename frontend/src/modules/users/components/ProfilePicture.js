@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 import { Avatar } from '@material-ui/core';
@@ -12,7 +13,7 @@ const useStyles = makeStyles( (theme) => ({
     avatar: {
         height: theme.spacing(3),
         width: theme.spacing(3),
-        margin: '5%'
+        margin: '5%',
     }
 }))
 

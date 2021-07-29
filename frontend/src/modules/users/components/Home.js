@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {makeStyles} from '@material-ui/core';
 
@@ -31,7 +30,6 @@ const useStyles = makeStyles( () => ({
 const Home = () => {
     const styles = useStyles();
     const user = useSelector(users.selectors.getName);
-    const [loading, setLoading] = useState(true);
 
 
     return (

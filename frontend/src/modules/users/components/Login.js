@@ -7,7 +7,8 @@ import app from '../../app';
 import {PermissionError} from '../../../backend';
 
 import {ErrorAlert} from '../../common';
-import {Container, Card, CardContent, CardActions, Typography, TextField, Button, FormControl} from '@material-ui/core';
+import {Container, Card, CardContent, CardActions, Typography, TextField, Button, FormControl, IconButton} from '@material-ui/core';
+import {Visibility, VisibilityOff} from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core';
 
 
@@ -47,10 +48,16 @@ const Login = () => {
     const history = useHistory();
     const [nickName, setNickName] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [backendErrors, setBackendErrors] = useState(null);
     let loginForm;
 
     /* ************************************ FUNCIONES ************************************ */
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    }
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -105,19 +112,29 @@ const Login = () => {
                             required
                             fullWidth
                             margin="normal"
+                            value={nickName}
                             onChange={(e) => setNickName(e.target.value)}
                         />
 
+                        <div style={{'display': 'flex'}}>
                         <TextField
                             id="password-input"
-                            type="password"
+                            type={(showPassword) ? 'text' : 'password'}
                             name="password"
                             label="Contraseña"
                             required
                             fullWidth
                             margin="normal"
+                            value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
+                        <IconButton
+                            onClick={handleClickShowPassword}
+                            onMouseDown={(e) => {e.preventDefault()}}
+                        >
+                            {(showPassword) ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                        </div>
                         </FormControl>
                     </CardContent>
 
