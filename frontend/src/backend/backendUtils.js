@@ -1,3 +1,4 @@
+import {compare, hash} from 'bcryptjs';
 import ServiceError from './exceptions/ServiceError';
 
 
@@ -192,3 +193,24 @@ const isJsonResponse = (response) => {
 
   return contentTypeHeader && isJsonType;
 };
+
+
+/**
+ * Compara si dos contraseñas son iguales, es decir, si tienen mismo HASH (bCrypt).
+ * @param {String} oldPassword - Contraseña antigua
+ * @param {String} newPassword - Contraseña nueva
+ * @returns {Boolean} TRUE si ambas contraseñas tienen mismo hash
+ */
+const comparePasswordsHaveSameHash = async (password, hashedPassword) => {
+  return await compare(password, hashedPassword);
+}
+
+
+/**
+ * Hashea la contraseña recibida usando BCrypt.
+ * @param {String} password - Contraseña a hashear
+ * @returns {String} - String con el hash de la contraseña
+ */
+const hashPassword = async (password) => {
+  return await hash(password);
+}

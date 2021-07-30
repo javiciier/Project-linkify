@@ -1,3 +1,4 @@
+/* ------------------------- FUNCIONES AUXILIARES ------------------------- */
 const isEmpty = (obj) => {
     let hasItems = Object.keys(obj).length !== 0;
     let isObject = obj.constructor === Object;
@@ -15,13 +16,7 @@ const getUsersState = (state) => state.users;
  * Obtiene los datos del usuario recibidos por el backend 
  * @returns Usuario loggeado en el sistema
  */
-export const getUser = (state) => getUsersState(state).user;
-
-/**
- * Obtiene los datos del usuario con la sesión iniciada actualmente.
- * @returns 
- */
-export const getUserData = (state) => getUser(state).user;
+const getUser = (state) => getUsersState(state).user;
 
 /**
  * Comprueba si el usuario tiene sesión iniciada
@@ -29,7 +24,17 @@ export const getUserData = (state) => getUser(state).user;
  */
 export const isLoggedIn = (state) => !isEmpty(getUser(state));
 
+/* ------------------------- SELECTORES ------------------------- */
+/**
+ * Obtiene los datos del usuario con la sesión iniciada actualmente.
+ * @returns 
+ */
+export const getUserData = (state) => getUser(state).user;
 
+/**
+ * Obtiene el identificador del usuario.
+ * @returns ID del usuario
+ */
 export const getUserId = (state) => getUserData(state)?.id;
 
 /**
@@ -42,9 +47,34 @@ export const getNickname = (state) => getUserData(state)?.nickName;
  * Obtiene el nombre del usuario.
  * @returns String con el nombre del usuario (o null si no está loggeado)
  */
-export const getName = (state) =>
-    isLoggedIn(state) ? getUserData(state)?.name : '!';
+export const getName = (state) => getUserData(state)?.name;
 
+/**
+ * Obtiene el primer apellido del usuario.
+ * @returns String con el nombre del usuario (o null si no está loggeado)
+ */
+export const getSurname1 = (state) => getUserData(state)?.surname1;
 
-export const getAvatar = (state) =>
-    isLoggedIn(state) ? getUserData(state)?.avatar : '!';
+/**
+ * Obtiene el segundo apellido del usuario.
+ * @returns String con el nombre del usuario (o null si no está loggeado)
+ */
+export const getSurname2 = (state) => getUserData(state)?.surname2;
+
+/**
+ * Obtiene la imagen de perfil del usuario.
+ * @returns String con la imagen codificada en Base64
+ */
+export const getAvatar = (state) => getUserData(state)?.avatar;
+
+/**
+ * Obtiene el email del usuario.
+ * @returns String con la imagen codificada en Base64
+ */
+export const getEmail = (state) => getUserData(state)?.email;
+
+/**
+ * Obtiene la contraseña (hasheada) del usuario.
+ * @returns String con la imagen codificada en Base64
+ */
+ export const getHashedPassword = (state) => getUserData(state)?.password;

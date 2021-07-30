@@ -43,6 +43,9 @@ public class UserServiceImpl implements UserService {
         if (newUser.getSurname2() != null)
             actualUser.setSurname2((newUser.getSurname2()));
 
+        if (newUser.getNickName() != null)
+            actualUser.setNickName((newUser.getNickName()));
+
         if (newUser.getEmail() != null)
             actualUser.setEmail(newUser.getEmail());
 
