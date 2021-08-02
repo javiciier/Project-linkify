@@ -153,7 +153,7 @@ const Header = () => {
             <Toolbar>
                 {/* Logotipo */}
                 <Typography variant="h4" className={styles.appLogo}>
-                    <Link to="/" className={styles.link}>Linkify</Link>
+                    <Link to="/" className={styles.link}>LINKIFY</Link>
                 </Typography>
         
                 {/* Acciones del usuario */}

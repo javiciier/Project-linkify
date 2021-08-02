@@ -14,6 +14,9 @@ const useStyles = makeStyles( () => ({
     component: {
         minHeight: '100vh',
         backgroundColor: '#E9F1F5',
+    },
+    bodyContainer: {
+        minWidth: 'min-content'
     }
 }));
 
@@ -31,7 +34,7 @@ const Body = () => {
         <div className={styles.component}>
             <AppStatusDialog/>
             <br/>
-            <Switch>
+            <Switch className={styles.bodyContainer}>
                 {/* Rutas sin autorización */}
                 {!loggedIn && <Route exact path="/"> <LandingPage/> </Route>}
                 {!loggedIn && <Route exact path="/login"> <Login/> </Route>}

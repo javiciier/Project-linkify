@@ -1,8 +1,8 @@
-import { useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useRef, useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import {Container, Card, CardContent, CardActions, FormControl, TextField, Button} from '@material-ui/core';
-import { DeleteForever } from '@material-ui/icons';
+import { Save, DeleteForever } from '@material-ui/icons';
 import {makeStyles} from '@material-ui/core';
 
 import users from '..';
@@ -22,12 +22,14 @@ const useStyles = makeStyles( () => ({
     },
     card: {
         width: '80%',
+        minWidth: 'min-content',
+        border: '2px #005691 solid',
+        padding: '2vh'
     },
     form: {
         display: 'flex',
         flexDirection: 'column',
         alignContent: 'center',
-        justifyContent: 'center',
     },
     avatarAndIdContainer: {
         display: 'flex',
@@ -37,25 +39,22 @@ const useStyles = makeStyles( () => ({
     avatar: {
         height: 'auto',
         padding: '1vh',
-        border: '2px solid black',
+        border: '2px solid #005691',
         borderRadius: '10px',
     },
     userID: {
         margin: 'auto',
     },
-    userData: {
-        display: 'inline-block',
-        flexDirection: 'column',
-        alignContent: 'center',
-        padding: '1.5vh'
-    },
     textField: {
-        margin: 'auto',
+        margin: '2rem',
+        maxWidth: '95%',
+        position: 'relative',
     },
     cardActions : {
         display: 'flex',
-        justifyContent: 'space-between',
-        margin: '1.5vh'
+        flexDirection: 'column',
+        alignContent: 'center',
+        margin: '1.5vh',
     },
     button: {
         background: '#005691',
@@ -76,7 +75,8 @@ const useStyles = makeStyles( () => ({
  */
 const UserProfile = () => {
     const styles = useStyles();
-    const profileForm = useRef();
+    const dispatch = useDispatch();
+
     const id = useSelector(users.selectors.getUserId);
     const name = useSelector(users.selectors.getName);
     const surname1 = useSelector(users.selectors.getSurname1);
@@ -92,23 +92,61 @@ const UserProfile = () => {
     const [newEmail, setNewEmail] = useState('');
     const [newAvatar, setNewAvatar] = useState('');
     const [shouldUpdateProfile, setUpdateProfile] = useState(false);        // Indica si se debería actualizar perfil
+    const [showStatus, setShowStatus] = useState(false);
+    const [reloadProfile, setReloadProfile] = useState(false);
+    let profileForm;
     /* ************************************ FUNCIONES ************************************ */
 
-    const handleSubmit = (e) => {
+    const handleUpdateProfileSubmit = (e) => {
         e.preventDefault();
 
+        if (profileForm.checkValidity()) {
+            const newUserData = {
+                id: id,
+                name: newName.trim() || name,
+                surname1: newSurname1.trim() || surname1,
+                surname2: newSurname2.trim() || surname2,
+                nickName: newNickName.trim() || nickName,
+                email: newEmail.trim() || email,
+                avatar: newAvatar || avatar
+            }
+            let onSuccess = (user) => {
+                console.log("new user updated\n", user);
+                setReloadProfile(true);
+            }
+            let onError = () => { }
+            
+            dispatch(users.actions.updateProfile(newUserData, onSuccess, onError));
+        }
+    }
 
+    const handleClickDeleteProfile = (e) => {
+        e.preventDefault();
+        console.log('delete profile submit');
+    }
+
+    /**
+     * Determina cuándo se producen nuevos cambios en los datos para activar el botón de confirmación.
+     */
+    const handleChange = () => {
+        setUpdateProfile(true);
     }
 
     /* ************************************ COMPONENTE ************************************ */
+    useEffect( () => {
+        console.log('useEffect');
+    }, [reloadProfile])
+
+
     return (
         <div className={styles.component}>
             <Container className={styles.container}>
                 <Card
                     className={styles.card}
                     component='form'
-                    ref={profileForm}
-                    onSubmit={handleSubmit}
+                    ref={(node) => profileForm = node}
+                    onChange={handleChange}
+                    onSubmit={handleUpdateProfileSubmit}
                 >
                     <CardContent>
                         <FormControl className={styles.form}>
@@ -123,49 +161,85 @@ const UserProfile = () => {
                                 </div>
                             </div>
 
-                            <div className={styles.userData}>
-                                <TextField
-                                    id='name-field'
-                                    className={styles.textField}
-                                    name='name'
-                                    type='text'
-                                    label='Nombre:'
-                                    defaultValue={name}
-                                    margin='auto'
-                                    onChange={(e) => {}}
-                                />
+                            {/* TODO: Añadir opción para actualizar foto de perfil */}
+                            <TextField
+                                id='name-field'
+                                className={styles.textField}
+                                name='name'
+                                type='text'
+                                label='Nombre:'
+                                variant='outlined'
+                                defaultValue={name}
+                                onChange={(e) => {setNewName(e.target.value)}}
+                            />
 
-                                <TextField
-                                    id='surname1-field'
-                                    className={styles.textField}
-                                    name='surname1'
-                                    type='text'
-                                    label='Primer apellido:'
-                                    defaultValue={surname1}
-                                    margin='auto'
-                                    onChange={(e) => {}}
-                                />
-                            </div>
+                            <TextField
+                                id='surname1-field'
+                                className={styles.textField}
+                                name='surname1'
+                                type='text'
+                                label='Primer apellido:'
+                                variant='outlined'
+                                defaultValue={surname1}
+                                onChange={(e) => {setNewSurname1(e.target.value)}}
+                            />
 
+                            <TextField
+                                id='surname2-field'
+                                className={styles.textField}
+                                name='surname2'
+                                type='text'
+                                label='Segundo apellido:'
+                                variant='outlined'
+                                defaultValue={surname2}
+                                onChange={(e) => {setNewSurname2(e.target.value)}}
+                            />
+
+                            <TextField
+                                id='nickName-field'
+                                className={styles.textField}
+                                name='nickName'
+                                type='text'
+                                label='Nombre de usuario:'
+                                variant='outlined'
+                                defaultValue={nickName}
+                                onChange={(e) => {setNewNickName(e.target.value)}}
+                            />
+
+                            <TextField
+                                id='emaoñ-field'
+                                className={styles.textField}
+                                name='email'
+                                type='text'
+                                label='Correo electrónico:'
+                                variant='outlined'
+                                defaultValue={email}
+                                onChange={(e) => {setNewEmail(e.target.value)}}
+                            />
                         </FormControl>
                     </CardContent>
 
 
-                    <CardActions className={styles.cardActions}>
-                        <Button className={styles.button}
-                            type='submit'
-                            fullWidth
-                            >
-                            Actualizar perfil
-                        </Button>
+                    <CardActions>
+                        <Container className={styles.cardActions}>
+                            {shouldUpdateProfile &&
+                                <Button className={styles.button}
+                                type='submit'
+                                fullWidth
+                                startIcon={<Save />}
+                                >
+                                    Confirmar cambios
+                                </Button>
+                            }
 
-                        <Button className={styles.deleteButton}
-                            type='submit'
-                            fullWidth
-                            startIcon={<DeleteForever />}
-                        >
-                            Eliminar perfil
-                        </Button>
+                            <Button className={styles.deleteButton}
+                                fullWidth
+                                startIcon={<DeleteForever />}
+                                onClick={handleClickDeleteProfile}
+                                >
+                                Eliminar perfil
+                            </Button>
+                        </Container>
                     </CardActions>
                 </Card>
             </Container>

@@ -8,10 +8,7 @@ import com.commitguy.backend.model.exceptions.common.PermissionException;
 import com.commitguy.backend.model.services.UserService;
 import com.commitguy.backend.rest.dtos.conversors.UserDtoConversor;
 import com.commitguy.backend.rest.dtos.errors.ErrorDto;
-import com.commitguy.backend.rest.dtos.user.AuthenticatedUserDto;
-import com.commitguy.backend.rest.dtos.user.ChangePasswordParamsDto;
-import com.commitguy.backend.rest.dtos.user.UserDto;
-import com.commitguy.backend.rest.dtos.user.UserLoginParamsDto;
+import com.commitguy.backend.rest.dtos.user.*;
 import com.commitguy.backend.rest.jwt.JwtGenerator;
 import com.commitguy.backend.rest.jwt.JwtInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.Base64;
 
 @RestController
 @RequestMapping("/users")
@@ -65,16 +61,17 @@ public class UserController {
      * @param userDto Datos del nuevo usuario
      * @return El usuario con los nuevos datos
      */
-    @PutMapping("/{userId}/updateProfile")
-    public UserDto updateProfile(@RequestAttribute Long id,
-                                 @PathVariable Long userId,
-                                 @Validated @RequestBody UserDto userDto) throws PermissionException, NonExistentUserException {
+    @PutMapping("/{id}/updateProfile")
+    public UpdateUserDto updateProfile(@RequestAttribute Long userId,
+                                 @PathVariable Long id,
+                                 @Validated @RequestBody UpdateUserDto userDto) throws PermissionException, NonExistentUserException {
         // El usuario que quiere modificar su perfil debe ser el mismo que tiene la sesión activa
         if (!id.equals(userId))
             throw new PermissionException("Usuario no autorizado");
 
         // Crea el nuevo usuario con los datos y se los comunica al servicio para actualizarlo
-        User updatedUser = new User(
+        User user = new User(
+                userDto.getId(),
                 userDto.getName(),
                 userDto.getSurname1(),
                 userDto.getSurname2(),
@@ -82,9 +79,9 @@ public class UserController {
                 userDto.getNickName(),
                 userDto.getEmail(),
                 userDto.getAvatar());
-        updatedUser = userService.updateProfile(updatedUser);
+        User updatedUser = userService.updateProfile(user);
 
-        return UserDtoConversor.toUserDto(updatedUser);
+        return UserDtoConversor.toUpdateUserDto(updatedUser);
     }
 
 

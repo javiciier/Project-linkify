@@ -52,8 +52,8 @@ public class UserServiceImpl implements UserService {
         if (newUser.getAvatar() != null)
             actualUser.setAvatar(newUser.getAvatar());
 
-        userDao.save(actualUser);
-        return actualUser;
+        //userDao.save(actualUser);
+        return userDao.save(actualUser);
     }
 
     @Override

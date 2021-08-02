@@ -34,6 +34,17 @@ public class User {
         this.avatar = avatar;
     }
 
+    public User(Long id, String name, String surname1, String surname2, String password, String nickName, String email, String avatar) {
+        this.id = id;
+        this.name = name;
+        this.surname1 = surname1;
+        this.surname2 = surname2;
+        this.password = password;
+        this.nickName = nickName;
+        this.email = email;
+        this.avatar = avatar;
+    }
+
     /* Propiedades de la entidad: atributos con sus métodos getter y setter */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

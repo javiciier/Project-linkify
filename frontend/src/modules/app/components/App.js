@@ -18,6 +18,7 @@ const useStyles = makeStyles( () => ({
         display: 'flex',
         flexDirection: 'column',
         // background: 'lightblue'
+        minWidth: '540px'
     },
 
 }));

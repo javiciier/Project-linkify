@@ -77,9 +77,8 @@ export const updateProfile = (user, onSuccessCallback, onErrorCallback) =>
     dispatch => {
         let onSuccess = (updatedUser) => {
             dispatch(updateProfileCompleted(updatedUser));
-            onSuccessCallback();
+            onSuccessCallback(updatedUser);
         }
-
         backend.userService.updateProfile(user, onSuccess, onErrorCallback);
     }
 
