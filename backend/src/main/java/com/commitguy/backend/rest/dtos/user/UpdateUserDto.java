@@ -1,6 +1,5 @@
 package com.commitguy.backend.rest.dtos.user;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class UpdateUserDto {
@@ -8,19 +7,17 @@ public class UpdateUserDto {
     private String name;
     private String surname1;
     private String surname2;
-    private String password;
     private String nickName;
     private String email;
     private String avatar;
 
     public UpdateUserDto() {}
 
-    public UpdateUserDto(Long id, String name, String surname1, String surname2, String password, String nickName, String email, String avatar) {
+    public UpdateUserDto(Long id, String name, String surname1, String surname2, String nickName, String email, String avatar) {
         this.id = id;
         this.name = name;
         this.surname1 = surname1;
         this.surname2 = surname2;
-        this.password = password;
         this.nickName = nickName;
         this.email = email;
         this.avatar = avatar;
@@ -58,15 +55,6 @@ public class UpdateUserDto {
 
     public void setSurname2(String surname2) {
         this.surname2 = surname2;
-    }
-
-    @Size(min = 1, max = 50)
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     @Size(min = 1, max = 50)

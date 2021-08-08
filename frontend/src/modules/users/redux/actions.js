@@ -136,7 +136,7 @@ export const getAvatar = (userId, onSuccessCallback, onErrorCallback, onUnauthor
 /* ****************************************** ACCIONES ****************************************** */
 /**
  * Devuelve una acción para indicar que se ha completado el login.
- * @param {Object} loggedInUser - Datos del usuario 
+ * @param {Object} signedUpUser - Datos del usuario y token de sesión JWT
  * @returns {Object} - Tipo de la acción y datos del usuario.
  */
 const loginCompleted = (loggedInUser) => ({
@@ -147,12 +147,12 @@ const loginCompleted = (loggedInUser) => ({
 
 /**
  * Devuelve una acción para indicar que se ha completado el login a partir del JWT.
- * @param {Object} loggedInUser - Datos del usuario 
+ * @param {Object} user - Datos del usuario 
  * @returns {Object} - Tipo de la acción y datos del usuario.
  */
- const loginUsingTokenCompleted = (loggedInUser) => ({
+ const loginUsingTokenCompleted = (user) => ({
     type: actionTypes.LOGIN_USING_TOKEN_COMPLETED,
-    loggedInUser
+    user
 })
 
 
@@ -179,9 +179,9 @@ const signUpCompleted = (signedUpUser) => ({
  * Devuelve una acción para indicar que se han modificado los datos del usuario.
  * @returns {Object} - Tipo de la acción y datos actualizados del usuario
  */
-const updateProfileCompleted = (updatedUser) => ({
+const updateProfileCompleted = (user) => ({
     type: actionTypes.UPDATE_PROFILE_COMPLETED,
-    updatedUser
+    user
 })
 
 

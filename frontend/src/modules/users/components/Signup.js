@@ -103,7 +103,6 @@ const Signup = () => {
             }
             let onSuccess = () => {
                 history.push('/');
-                window.location.reload();       // Workaround para forzar a redux a actualizar estado
             }
             let onError = (error) => {
                 setBackendErrors(error);

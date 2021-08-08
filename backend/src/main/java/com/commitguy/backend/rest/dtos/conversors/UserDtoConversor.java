@@ -29,7 +29,6 @@ public class UserDtoConversor {
                 user.getName(),
                 user.getSurname1(),
                 user.getSurname2(),
-                user.getPassword(),
                 user.getNickName(),
                 user.getEmail(),
                 user.getAvatar());

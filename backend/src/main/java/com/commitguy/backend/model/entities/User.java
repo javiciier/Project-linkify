@@ -6,8 +6,8 @@ import java.util.Arrays;
 /**
  * Representación del usuario en la BD.
  * LINKS:
- *  - Imágenes: https://vaadin.com/blog/saving-and-displaying-images-using-jpa
- *  - Tutorial imágenes: https://github.com/DiegoSanzVi/saving_displaying_images_db
+ * - Imágenes: https://vaadin.com/blog/saving-and-displaying-images-using-jpa
+ * - Tutorial imágenes: https://github.com/DiegoSanzVi/saving_displaying_images_db
  */
 @Entity
 public class User {
@@ -22,7 +22,8 @@ public class User {
     @Basic(fetch = FetchType.LAZY)
     private String avatar;
 
-    public User() {}
+    public User() {
+    }
 
     public User(String name, String surname1, String surname2, String password, String nickName, String email, String avatar) {
         this.name = name;
@@ -34,12 +35,24 @@ public class User {
         this.avatar = avatar;
     }
 
+    /** Constructor con el campo _id_ */
     public User(Long id, String name, String surname1, String surname2, String password, String nickName, String email, String avatar) {
         this.id = id;
         this.name = name;
         this.surname1 = surname1;
         this.surname2 = surname2;
         this.password = password;
+        this.nickName = nickName;
+        this.email = email;
+        this.avatar = avatar;
+    }
+
+    /** Constructor sin el campo _password_ */
+    public User(Long id, String name, String surname1, String surname2, String nickName, String email, String avatar) {
+        this.id = id;
+        this.name = name;
+        this.surname1 = surname1;
+        this.surname2 = surname2;
         this.nickName = nickName;
         this.email = email;
         this.avatar = avatar;

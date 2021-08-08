@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import {Container, Card, CardContent, CardActions, FormControl, TextField, Button} from '@material-ui/core';
@@ -92,7 +92,7 @@ const UserProfile = () => {
     const [newEmail, setNewEmail] = useState('');
     const [newAvatar, setNewAvatar] = useState('');
     const [shouldUpdateProfile, setUpdateProfile] = useState(false);        // Indica si se debería actualizar perfil
-    const [showStatus, setShowStatus] = useState(false);
+    //const [showStatus, setShowStatus] = useState(false);
     const [reloadProfile, setReloadProfile] = useState(false);
     let profileForm;
     /* ************************************ FUNCIONES ************************************ */
@@ -102,7 +102,7 @@ const UserProfile = () => {
 
         if (profileForm.checkValidity()) {
             const newUserData = {
-                id: id,
+                id: Number(id),
                 name: newName.trim() || name,
                 surname1: newSurname1.trim() || surname1,
                 surname2: newSurname2.trim() || surname2,
@@ -111,7 +111,6 @@ const UserProfile = () => {
                 avatar: newAvatar || avatar
             }
             let onSuccess = (user) => {
-                console.log("new user updated\n", user);
                 setReloadProfile(true);
             }
             let onError = () => { }
@@ -134,7 +133,7 @@ const UserProfile = () => {
 
     /* ************************************ COMPONENTE ************************************ */
     useEffect( () => {
-        console.log('useEffect');
+        console.log('User profile has changed');
     }, [reloadProfile])
 
 

@@ -20,7 +20,7 @@ const user = (state = defaultState.user, action) => {
             return action.signedUpUser.user;
             
         case actionTypes.UPDATE_PROFILE_COMPLETED:
-            return action.updatedUser;
+            return action.user;
                     
         case actionTypes.LOGOUT_COMPLETED:
             return defaultState.user;

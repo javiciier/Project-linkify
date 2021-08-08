@@ -21,7 +21,7 @@ export const login = (nickName, password, onSuccessCallback, onErrorCallback, on
     let onSuccess = (authenticatedUser) => {
         setOnUnauthorizedErrorCallback(onUnauthorizedCallback);
         setUserJWT(authenticatedUser.token);
-        onSuccessCallback(authenticatedUser);
+        onSuccessCallback(authenticatedUser.user);
     }
 
     // Llamada al servicio
@@ -38,8 +38,8 @@ export const loginFromToken = (onSuccessCallback, onUnauthorizedCallback) => {
     // Parámetros de la petición
     const loginFromTokenEndpoint = `${USER_ENDPOINT}/loginUsingToken`;
     let fetchConfig = configFetchParameters('POST');
-    let onSuccess = (authenticatedUser) => {
-        onSuccessCallback(authenticatedUser);
+    let onSuccess = (user) => {
+        onSuccessCallback(user);
     }
     let onError = () => removeUserJWT();
 
@@ -95,7 +95,7 @@ export const signUp = (userData, onSuccessCallback, onErrorCallback, onUnauthori
 export const updateProfile = (userData, onSuccessCallback, onErrorCallback) => {
     // Parámetros de la petición
     const updateProfileEndpoint = `${USER_ENDPOINT}/${userData.id}/updateProfile`;
-    let fetchConfig = configFetchParameters('PUT', userData);
+    let fetchConfig = configFetchParameters('POST', userData);
 
     // Llamada al servicio
     backendFetch(updateProfileEndpoint, fetchConfig, onSuccessCallback, onErrorCallback);

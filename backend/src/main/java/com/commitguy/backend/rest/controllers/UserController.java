@@ -54,14 +54,15 @@ public class UserController {
 
     /* ***************************** HTTP REQUEST HANDLERS ***************************** */
 
+    /* @PathVariable: id (en las URL)   -    @RequestAttribute userId (igual que en JWT) */
     /**
      * Actualiza el perfil del usuario con los nuevos datos recibidos
-     * @param id ID del usuario que ejecuta la operación (extraído del JWT)
-     * @param userId ID del usuario a actualizar (extraído de la URL)
+     * @param userId ID del usuario que ejecuta la operación (extraído del JWT)
+     * @param id ID del usuario a actualizar (extraído de la URL)
      * @param userDto Datos del nuevo usuario
      * @return El usuario con los nuevos datos
      */
-    @PutMapping("/{id}/updateProfile")
+    @PostMapping("/{id}/updateProfile")
     public UpdateUserDto updateProfile(@RequestAttribute Long userId,
                                  @PathVariable Long id,
                                  @Validated @RequestBody UpdateUserDto userDto) throws PermissionException, NonExistentUserException {
@@ -71,11 +72,10 @@ public class UserController {
 
         // Crea el nuevo usuario con los datos y se los comunica al servicio para actualizarlo
         User user = new User(
-                userDto.getId(),
+                userId,
                 userDto.getName(),
                 userDto.getSurname1(),
                 userDto.getSurname2(),
-                userDto.getPassword(),
                 userDto.getNickName(),
                 userDto.getEmail(),
                 userDto.getAvatar());
@@ -97,7 +97,6 @@ public class UserController {
         userService.signUp(user);
         String userToken = generateUserToken(user);
 
-
         // Crea la URI de su perfil una vez se registre
         URI redirectLocation = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -108,7 +107,7 @@ public class UserController {
         // Devuelve los datos al usuario y le redirige a su perfil
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .location(redirectLocation)
+                //.location(redirectLocation)
                 .body(UserDtoConversor.toAuthenticatedUserDto(user,userToken));
 
     }
@@ -135,19 +134,19 @@ public class UserController {
      * @throws NonExistentUserException No existe el usuario
      */
     @PostMapping("/loginUsingToken")
-    public AuthenticatedUserDto loginFromId(@RequestAttribute Long userId,
+    public UserDto loginFromUserToken(@RequestAttribute Long userId,
                                             @RequestAttribute String userToken) throws NonExistentUserException {
         // Busca el usuario por su id
         User user = userService.loginFromId(userId);
-        return UserDtoConversor.toAuthenticatedUserDto(user, userToken);
+        return UserDtoConversor.toUserDto(user);
     }
 
 
     // TODO: DOCUMENTAR ESTE MÉTODO
-    @PostMapping("/{userId}/changePassword")
+    @PostMapping("/{id}/changePassword")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void changePassword(@RequestAttribute Long id,
-                               @PathVariable Long userId,
+    public void changePassword(@RequestAttribute Long userId,
+                               @PathVariable Long id,
                                @RequestBody ChangePasswordParamsDto params)
             throws NonExistentUserException, IncorrectLoginException, PermissionException {
         if (!id.equals(userId)) {
@@ -163,14 +162,14 @@ public class UserController {
         - https://www.section.io/engineering-education/working-with-images-in-spring-boot/
         - https://zetcode.com/springboot/serveimage/
     */
-    @GetMapping(value = "/{userId}/avatar",
+    @GetMapping(value = "/{id}/avatar",
             produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<String> getAvatar(@PathVariable Long userId)
+    public ResponseEntity<String> getAvatar(@PathVariable Long id)
             throws NonExistentUserException {
         try {
         // Obtiene los datos de la imagen del usuario
-        String b64Avatar = userService.getAvatar(userId);
+        String b64Avatar = userService.getAvatar(id);
 
         // Crea la respuesta
         return ResponseEntity.ok()
@@ -187,11 +186,11 @@ public class UserController {
         - https://www.section.io/engineering-education/working-with-images-in-spring-boot/
         - https://zetcode.com/springboot/serveimage/
     */
-    @PostMapping(value = "/{userId}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> setAvatar(@PathVariable Long userId, @RequestParam MultipartFile imageFile)
+    @PostMapping(value = "/{id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> setAvatar(@PathVariable Long id, @RequestParam MultipartFile imageFile)
             throws NonExistentUserException {
         // Establece la imagen del usuario
-        userService.setAvatar(userId, imageFile);
+        userService.setAvatar(id, imageFile);
         // Crea la respuesta
         return ResponseEntity.status(HttpStatus.CREATED)
                     .contentType(MediaType.IMAGE_JPEG)

@@ -26,55 +26,49 @@ export const isLoggedIn = (state) => !isEmpty(getUser(state));
 
 /* ------------------------- SELECTORES ------------------------- */
 /**
- * Obtiene los datos del usuario con la sesión iniciada actualmente.
- * @returns 
- */
-export const getUserData = (state) => getUser(state).user;
-
-/**
  * Obtiene el identificador del usuario.
  * @returns ID del usuario
  */
-export const getUserId = (state) => getUserData(state)?.id;
+export const getUserId = (state) => getUser(state)?.id;
 
 /**
  * Obtiene el apodo del usuario.
  * @returns String con el nickname del usuario (o null si no está loggeado)
  */
-export const getNickname = (state) => getUserData(state)?.nickName;
+export const getNickname = (state) => getUser(state)?.nickName;
 
 /**
  * Obtiene el nombre del usuario.
  * @returns String con el nombre del usuario (o null si no está loggeado)
  */
-export const getName = (state) => getUserData(state)?.name;
+export const getName = (state) => getUser(state)?.name;
 
 /**
  * Obtiene el primer apellido del usuario.
  * @returns String con el nombre del usuario (o null si no está loggeado)
  */
-export const getSurname1 = (state) => getUserData(state)?.surname1;
+export const getSurname1 = (state) => getUser(state)?.surname1;
 
 /**
  * Obtiene el segundo apellido del usuario.
  * @returns String con el nombre del usuario (o null si no está loggeado)
  */
-export const getSurname2 = (state) => getUserData(state)?.surname2;
+export const getSurname2 = (state) => getUser(state)?.surname2;
 
 /**
  * Obtiene la imagen de perfil del usuario.
  * @returns String con la imagen codificada en Base64
  */
-export const getAvatar = (state) => getUserData(state)?.avatar;
+export const getAvatar = (state) => getUser(state)?.avatar;
 
 /**
  * Obtiene el email del usuario.
  * @returns String con la imagen codificada en Base64
  */
-export const getEmail = (state) => getUserData(state)?.email;
+export const getEmail = (state) => getUser(state)?.email;
 
 /**
  * Obtiene la contraseña (hasheada) del usuario.
  * @returns String con la imagen codificada en Base64
  */
- export const getHashedPassword = (state) => getUserData(state)?.password;
+ export const getHashedPassword = (state) => getUser(state)?.password;
