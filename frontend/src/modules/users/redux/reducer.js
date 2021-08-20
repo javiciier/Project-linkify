@@ -23,13 +23,16 @@ const user = (state = defaultState.user, action) => {
             return action.user;
                     
         case actionTypes.LOGOUT_COMPLETED:
-            return defaultState.user;
+            return {};
 
         case actionTypes.GET_AVATAR_COMPLETED:
             return action.avatar;
 
         case actionTypes.SET_AVATAR_COMPLETED:
             return action.avatar;
+
+        case actionTypes.DELETE_USER_COMPLETED:
+            return action.userId;
 
         default:
             return state;

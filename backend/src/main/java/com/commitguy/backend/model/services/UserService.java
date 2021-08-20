@@ -65,4 +65,11 @@ public interface UserService {
      */
     public void setAvatar(Long userId, MultipartFile imageFile) throws NonExistentUserException;
 
+
+    /**
+     * Elimina el usuario del sistema
+     * @param userId Id del usuario
+     * @throws NonExistentUserException No existe el usuario
+     */
+    public void deleteUser(Long userId) throws NonExistentUserException;
 }

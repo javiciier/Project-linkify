@@ -123,9 +123,9 @@ export const changePassword = (id, oldPassword, newPassword, onSuccessCallback, 
 /**
  * Obtiene el avatar (imagen de perfil) del usuario recibido.
  * @param {Number} id - Id del usuario
- * @param {*} onSuccess - Función a ejecutar en caso de éxito
- * @param {*} onErrorCallback - Función a ejecutar en caso de error
- * @param {*} onUnauthorizedCallback - Función a ejecutar en caso de no estar autorizado
+ * @param {Function} onSuccess - Función a ejecutar en caso de éxito
+ * @param {Function} onErrorCallback - Función a ejecutar en caso de error
+ * @param {Function} onUnauthorizedCallback - Función a ejecutar en caso de no estar autorizado
  */
 export const getAvatar = (id, onSuccessCallback, onErrorCallback, onUnauthorizedCallback) => {
     // Parámetros de la petición
@@ -143,11 +143,11 @@ export const getAvatar = (id, onSuccessCallback, onErrorCallback, onUnauthorized
 
 /**
  * Modifica el avatar (imagen de perfil) del usuario recibido con la imagen recibida.
- * @param {*} id - Id del usuario
- * @param {*} avatar - Datos de la nueva imagen
- * @param {*} onSuccess - Función a ejecutar en caso de éxito
- * @param {*} onErrorCallback - Función a ejecutar en caso de error
- * @param {*} onUnauthorizedCallback - Función a ejecutar en caso de no estar autorizado
+ * @param {Number} id - Id del usuario
+ * @param {String} avatar - Datos de la nueva imagen
+ * @param {Function} onSuccess - Función a ejecutar en caso de éxito
+ * @param {Function} onErrorCallback - Función a ejecutar en caso de error
+ * @param {Function} onUnauthorizedCallback - Función a ejecutar en caso de no estar autorizado
  */
 export const setAvatar = (id, avatar, onSuccessCallback, onErrorCallback, onUnauthorizedCallback) => {
     // Parámetros de la peticion
@@ -160,4 +160,26 @@ export const setAvatar = (id, avatar, onSuccessCallback, onErrorCallback, onUnau
 
     // Llamada al servicio
     backendFetch(setAvatarEndpoint, fetchConfig, onSuccess, onErrorCallback);
+}
+
+
+/**
+ * Elimina la cuenta del usuario
+ * @param {Number} id 
+ * @param {Function} onSuccessCallback - Función a ejecutar en caso de éxito
+ * @param {Function} onErrorCallback - Función a ejecutar en caso de error
+ * @param {Function} onUnauthorizedCallback - Función a ejecutar en caso de no estar autorizado
+ */
+export const deleteUser = (id, onSuccessCallback, onErrorCallback, onUnauthorizedCallback) => {
+    // Parámetros de la petición
+    const deleteUserEndpoint = `${USER_ENDPOINT}/${id}/delete`;
+    let fetchConfig = configFetchParameters('DELETE');
+    let onSuccess = (response) => {
+        console.log(`Usuario con id ${id} eliminado`);
+        console.log(response);
+        onSuccessCallback(response);
+    }
+
+    // Llamada al servicio
+    backendFetch(deleteUserEndpoint, fetchConfig, onSuccess, onErrorCallback, onUnauthorizedCallback);
 }

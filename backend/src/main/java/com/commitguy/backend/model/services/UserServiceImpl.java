@@ -142,4 +142,12 @@ public class UserServiceImpl implements UserService {
         user.setAvatar(b64EncodedImageString);
         userDao.save(user);
     }
+
+
+    @Override
+    public void deleteUser(Long userId) throws NonExistentUserException {
+        // Busca al usuario en la BD
+        User user = permissionChecker.fetchUser(userId);
+        userDao.removeById(userId);
+    }
 }

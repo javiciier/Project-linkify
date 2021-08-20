@@ -197,6 +197,28 @@ public class UserController {
                     .build();
     }
 
+
+    /**
+     * Elimina un usuario del sistema
+     * @param id ID del usuario a eliminar (extraído de la URL)
+     * @param userId ID del usuario que ejecuta la operación (extraído del JWT)
+     * @return
+     */
+    @DeleteMapping(value="/{id}/delete")
+    public ResponseEntity<Long> deleteUser(@PathVariable Long id, @RequestAttribute Long userId)
+            throws NonExistentUserException, PermissionException {
+        // Comprobar si usuario tiene permisos
+        if (!id.equals(userId)) {
+            throw new PermissionException();
+        }
+
+        // Elimina al usuario
+        userService.deleteUser(userId);
+
+        // Indica que se ha eliminado correctamente
+        return new ResponseEntity<Long>(userId, HttpStatus.OK);
+    }
+
     /* ***************************** AUXILIAR FUNCTIONS ***************************** */
     private String generateUserToken(User user) {
         JwtInfo jwt = new JwtInfo(user.getId(), user.getNickName());

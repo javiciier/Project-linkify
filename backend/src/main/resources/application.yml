@@ -33,5 +33,5 @@ spring:
 
 project:
   jwtSession:
-    expirationInMinutes: 1440   # Minutos en 1 día
+    expirationInMinutes: 720   # Minutos en 12 horas
     signKey: Bu:GW8bgPlEw

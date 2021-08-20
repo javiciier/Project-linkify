@@ -133,6 +133,25 @@ export const getAvatar = (userId, onSuccessCallback, onErrorCallback, onUnauthor
 }
 
 
+/**
+ * Elimina un usuario de la aplicación.
+ * @param {*} userId - Id del usuario a eliminar
+ * @param {Function} onSuccessCallback - Función a ejecutar en caso de éxito
+ * @param {Function} onErrorCallback - Función a ejecutar en caso de error
+ * @param {Function} onUnauthorizedCallback - Función a ejecutar en caso de permisos insuficientes
+ * @returns 
+ */
+export const deleteUser = (userId, onSuccessCallback, onErrorCallback, onUnauthorizedCallback) =>
+    dispatch => {
+        let onSuccess = (userId) => {
+            dispatch(setDeleteUserCompleted(userId))
+            onSuccessCallback();
+        }
+
+        backend.userService.deleteUser(userId, onSuccess, onErrorCallback, onUnauthorizedCallback);
+    }
+
+
 /* ****************************************** ACCIONES ****************************************** */
 /**
  * Devuelve una acción para indicar que se ha completado el login.
@@ -150,7 +169,7 @@ const loginCompleted = (loggedInUser) => ({
  * @param {Object} user - Datos del usuario 
  * @returns {Object} - Tipo de la acción y datos del usuario.
  */
- const loginUsingTokenCompleted = (user) => ({
+const loginUsingTokenCompleted = (user) => ({
     type: actionTypes.LOGIN_USING_TOKEN_COMPLETED,
     user
 })
@@ -199,7 +218,18 @@ const getAvatarCompleted = (avatar) => ({
  * Devuelve una acción con el nuevo avatar del usuario.
  * @returns {String} - Tipo de la acción y nuevo avatar del usuario en Base64
  */
- const setAvatarCompleted = (avatar) => ({
+const setAvatarCompleted = (avatar) => ({
     type: actionTypes.SET_AVATAR_COMPLETED,
     avatar
+})
+
+
+
+/**
+ * Devuelve una acción para indicar que se ha eliminado a un usuario.
+ * @returns {String} - Tipo de la acción
+ */
+const setDeleteUserCompleted = (userId) => ({
+    type: actionTypes.DELETE_USER_COMPLETED,
+    userId
 })

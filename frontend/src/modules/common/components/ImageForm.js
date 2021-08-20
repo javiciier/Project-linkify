@@ -62,7 +62,7 @@ const ImageForm = ({onChangeCallback, formName, labelText}) => {
         }
         reader.readAsDataURL(image);
 
-        if (onChangeCallback) onChangeCallback();
+        if (onChangeCallback) onChangeCallback(imageB64String);
     }
 
 
@@ -75,7 +75,7 @@ const ImageForm = ({onChangeCallback, formName, labelText}) => {
                 type='file'
                 acept='images/*'
                 inputRef={hiddenInput}
-                onChange={handleChange}
+                onChange={onChangeCallback}
             />
 
 

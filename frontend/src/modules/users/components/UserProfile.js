@@ -5,7 +5,10 @@ import {Container, Card, CardContent, CardActions, FormControl, TextField, Butto
 import { Save, DeleteForever } from '@material-ui/icons';
 import {makeStyles} from '@material-ui/core';
 
+import {ErrorAlert} from '../../common';
+import { PermissionError } from '../../../backend';
 import users from '..';
+import app from '../../app';
 
 
 /* ************************************ ESTILOS (CSS) ************************************ */
@@ -92,9 +95,10 @@ const UserProfile = () => {
     const [newEmail, setNewEmail] = useState('');
     const [newAvatar, setNewAvatar] = useState('');
     const [shouldUpdateProfile, setUpdateProfile] = useState(false);        // Indica si se debería actualizar perfil
-    //const [showStatus, setShowStatus] = useState(false);
     const [reloadProfile, setReloadProfile] = useState(false);
+    const [backendErrors, setBackendErrors] = useState(null);
     let profileForm;
+
     /* ************************************ FUNCIONES ************************************ */
 
     const handleUpdateProfileSubmit = (e) => {
@@ -110,18 +114,36 @@ const UserProfile = () => {
                 email: newEmail.trim() || email,
                 avatar: newAvatar || avatar
             }
-            let onSuccess = (user) => {
+            let onSuccess = () => {
                 setReloadProfile(true);
             }
-            let onError = () => { }
+            let onError = (errors) => {
+                setBackendErrors(errors);
+            }
             
             dispatch(users.actions.updateProfile(newUserData, onSuccess, onError));
+        } else {
+            setBackendErrors(null);
         }
     }
 
     const handleClickDeleteProfile = (e) => {
         e.preventDefault();
         console.log('delete profile submit');
+
+        let onSuccess = () => {
+            console.log('User correctly deleted');
+            history.push('/');
+        }
+        let onError = (errors) => {
+            setBackendErrors(errors);
+        }
+        let onUnauthorized = () => {
+            console.log('Unauthorized')
+            dispatch(app.actions.error(new PermissionError('No puedes eliminar este perfil'))).toObject();
+        }
+
+        dispatch(users.actions.deleteUser(Number(id), onSuccess, onError, onUnauthorized));
     }
 
     /**
@@ -139,6 +161,11 @@ const UserProfile = () => {
 
     return (
         <div className={styles.component}>
+            <ErrorAlert
+                errors={backendErrors}
+                onCloseCallback={() => setBackendErrors(null)}
+            />
+
             <Container className={styles.container}>
                 <Card
                     className={styles.card}
@@ -150,11 +177,13 @@ const UserProfile = () => {
                     <CardContent>
                         <FormControl className={styles.form}>
                             <div className={styles.avatarAndIdContainer}>
-                                <Container>
+                                { avatar &&
+                                    <Container>
                                     <img className={styles.avatar}
                                         src={(avatar) ? `data:image/*;base64,${avatar}` : ''}
                                     />
                                 </Container>
+                                }
                                 <div className={styles.userID}>
                                     <b>ID:</b> {id}
                                 </div>

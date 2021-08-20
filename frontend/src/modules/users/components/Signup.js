@@ -227,7 +227,7 @@ const Signup = () => {
                         <ImageForm
                             formName='avatar-form'
                             labelText='Agrega tu foto de perfil'
-                            imageHandler={handleAvatarInput}
+                            onChangeCallback={setAvatar}
                         />
 
                         </FormControl>
