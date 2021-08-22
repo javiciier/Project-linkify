@@ -1,14 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import {Container, Card, CardContent, CardActions, FormControl, TextField, Button} from '@material-ui/core';
-import { Save, DeleteForever } from '@material-ui/icons';
+import { Save, DeleteForever, Edit } from '@material-ui/icons';
+import { Alert } from '@material-ui/lab';
 import {makeStyles} from '@material-ui/core';
 
 import {ErrorAlert} from '../../common';
 import { PermissionError } from '../../../backend';
 import users from '..';
 import app from '../../app';
+import { useHistory } from 'react-router-dom';
 
 
 /* ************************************ ESTILOS (CSS) ************************************ */
@@ -59,7 +61,7 @@ const useStyles = makeStyles( () => ({
         alignContent: 'center',
         margin: '1.5vh',
     },
-    button: {
+    saveChangesButton: {
         background: '#005691',
         fontWeight: 'bold',
         color: 'white',
@@ -79,6 +81,7 @@ const useStyles = makeStyles( () => ({
 const UserProfile = () => {
     const styles = useStyles();
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const id = useSelector(users.selectors.getUserId);
     const name = useSelector(users.selectors.getName);
@@ -94,13 +97,12 @@ const UserProfile = () => {
     const [newNickName, setNewNickName] = useState('');
     const [newEmail, setNewEmail] = useState('');
     const [newAvatar, setNewAvatar] = useState('');
-    const [shouldUpdateProfile, setUpdateProfile] = useState(false);        // Indica si se debería actualizar perfil
-    const [reloadProfile, setReloadProfile] = useState(false);
+    const [profileHasChanges, setProfileHasChanges] = useState(false);              // Indica si el perfil tiene cambios sin confirmar
     const [backendErrors, setBackendErrors] = useState(null);
+    const [updateCompleted, setUpdateCompleted] = useState(false);
     let profileForm;
 
     /* ************************************ FUNCIONES ************************************ */
-
     const handleUpdateProfileSubmit = (e) => {
         e.preventDefault();
 
@@ -115,7 +117,12 @@ const UserProfile = () => {
                 avatar: newAvatar || avatar
             }
             let onSuccess = () => {
-                setReloadProfile(true);
+                /* Muestra el banner indicando éxito en la actualización */
+                setUpdateCompleted(true);
+                setTimeout( () => {
+                    setUpdateCompleted(false);
+                }
+                , 3000)
             }
             let onError = (errors) => {
                 setBackendErrors(errors);
@@ -129,10 +136,8 @@ const UserProfile = () => {
 
     const handleClickDeleteProfile = (e) => {
         e.preventDefault();
-        console.log('delete profile submit');
 
         let onSuccess = () => {
-            console.log('User correctly deleted');
             history.push('/');
         }
         let onError = (errors) => {
@@ -150,14 +155,10 @@ const UserProfile = () => {
      * Determina cuándo se producen nuevos cambios en los datos para activar el botón de confirmación.
      */
     const handleChange = () => {
-        setUpdateProfile(true);
+        setProfileHasChanges(true);
     }
 
     /* ************************************ COMPONENTE ************************************ */
-    useEffect( () => {
-        console.log('User profile has changed');
-    }, [reloadProfile])
-
 
     return (
         <div className={styles.component}>
@@ -174,10 +175,15 @@ const UserProfile = () => {
                     onChange={handleChange}
                     onSubmit={handleUpdateProfileSubmit}
                 >
+                    {updateCompleted &&
+                        <Alert severity='success'>
+                            Perfil actualizado con éxito
+                        </Alert>
+                    }
                     <CardContent>
                         <FormControl className={styles.form}>
                             <div className={styles.avatarAndIdContainer}>
-                                { avatar &&
+                                {avatar &&
                                     <Container>
                                     <img className={styles.avatar}
                                         src={(avatar) ? `data:image/*;base64,${avatar}` : ''}
@@ -235,7 +241,7 @@ const UserProfile = () => {
                             />
 
                             <TextField
-                                id='emaoñ-field'
+                                id='email-field'
                                 className={styles.textField}
                                 name='email'
                                 type='text'
@@ -250,13 +256,13 @@ const UserProfile = () => {
 
                     <CardActions>
                         <Container className={styles.cardActions}>
-                            {shouldUpdateProfile &&
-                                <Button className={styles.button}
-                                type='submit'
-                                fullWidth
-                                startIcon={<Save />}
+                            {profileHasChanges &&
+                                <Button className={styles.saveChangesButton}
+                                    type='submit'
+                                    fullWidth
+                                    startIcon={<Save />}
                                 >
-                                    Confirmar cambios
+                                    Guardar cambios
                                 </Button>
                             }
 
@@ -264,7 +270,7 @@ const UserProfile = () => {
                                 fullWidth
                                 startIcon={<DeleteForever />}
                                 onClick={handleClickDeleteProfile}
-                                >
+                            >
                                 Eliminar perfil
                             </Button>
                         </Container>

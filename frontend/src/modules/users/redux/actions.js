@@ -144,7 +144,7 @@ export const getAvatar = (userId, onSuccessCallback, onErrorCallback, onUnauthor
 export const deleteUser = (userId, onSuccessCallback, onErrorCallback, onUnauthorizedCallback) =>
     dispatch => {
         let onSuccess = (userId) => {
-            dispatch(setDeleteUserCompleted(userId))
+            dispatch(setDeleteUserCompleted(userId));
             onSuccessCallback();
         }
 

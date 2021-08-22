@@ -128,14 +128,6 @@ const Header = () => {
                     </MenuItem>
 
                     <MenuItem onClick={() => setMenuOpen(false)}>
-                        <Link to="/users/update-profile"
-                            className={styles.link}
-                        >
-                            Actualizar perfil
-                        </Link>
-                    </MenuItem>
-
-                    <MenuItem onClick={() => setMenuOpen(false)}>
                         <Link href="#" to="/logout"
                             className={styles.link}
                         >

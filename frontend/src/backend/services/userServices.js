@@ -175,8 +175,7 @@ export const deleteUser = (id, onSuccessCallback, onErrorCallback, onUnauthorize
     const deleteUserEndpoint = `${USER_ENDPOINT}/${id}/delete`;
     let fetchConfig = configFetchParameters('DELETE');
     let onSuccess = (response) => {
-        console.log(`Usuario con id ${id} eliminado`);
-        console.log(response);
+        removeUserJWT();
         onSuccessCallback(response);
     }
 

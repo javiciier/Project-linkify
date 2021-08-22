@@ -1,5 +1,5 @@
 import {useSelector} from 'react-redux';
-import {Route, Switch} from 'react-router-dom';
+import {Redirect, Route, Switch} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 
 import users from '../../users';

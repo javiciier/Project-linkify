@@ -32,7 +32,7 @@ const user = (state = defaultState.user, action) => {
             return action.avatar;
 
         case actionTypes.DELETE_USER_COMPLETED:
-            return action.userId;
+            return {};
 
         default:
             return state;
