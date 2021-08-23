@@ -1,0 +1,40 @@
+env:
+  browser: true
+  commonjs: true
+  es2021: true
+  node: true
+
+settings:
+  react:
+    version: detect
+
+extends:
+  - 'eslint:recommended'
+  - 'plugin:react/recommended'
+  - 'plugin:jest/recommended'
+
+parserOptions:
+  sourceType: module
+  allowImportExportEverywhere: true
+  ecmaFeatures:
+    jsx: true
+  ecmaVersion: 12
+
+plugins:
+  - react
+  - jest
+
+rules:
+  linebreak-style:
+    - error
+    - unix
+  quotes:
+    - 1
+    - single
+  semi:
+    - 0
+    - never
+  react/react-in-jsx-scope: 0
+  no-unused-vars: 
+    - 1
+    - vars: local

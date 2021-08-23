@@ -1,27 +1,14 @@
-HELP.md
-target/
+# Common
+**.vscode
+**.idea
+**.DS_Store
 
-.mvn
-mvnw
-mvnw.cmd
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+# Backend
+**/target
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
 
-### VS Code ###
-.vscode/
+# Frontend
+**/node_modules
+**/build
+

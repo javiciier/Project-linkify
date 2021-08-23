@@ -1,0 +1,153 @@
+package com.commitguy.backend.model.services;
+
+import com.commitguy.backend.model.daos.UserDao;
+import com.commitguy.backend.model.entities.User;
+import com.commitguy.backend.model.exceptions.UserAlreadyExistsException;
+import com.commitguy.backend.model.exceptions.IncorrectLoginException;
+import com.commitguy.backend.model.exceptions.NonExistentUserException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.Base64;
+import java.util.Optional;
+
+@Service
+@Transactional
+public class UserServiceImpl implements UserService {
+    @Autowired
+    private UserDao userDao;
+
+    @Autowired
+    private PermissionChecker permissionChecker;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+
+    @Override
+    public User updateProfile(User newUser) throws NonExistentUserException {
+        User actualUser = permissionChecker.fetchUser(newUser.getId());
+
+        if (newUser.getName() != null)
+            actualUser.setName(newUser.getName());
+
+        if (newUser.getSurname1() != null)
+            actualUser.setSurname1(newUser.getSurname1());
+
+        if (newUser.getSurname2() != null)
+            actualUser.setSurname2((newUser.getSurname2()));
+
+        if (newUser.getNickName() != null)
+            actualUser.setNickName((newUser.getNickName()));
+
+        if (newUser.getEmail() != null)
+            actualUser.setEmail(newUser.getEmail());
+
+        if (newUser.getAvatar() != null)
+            actualUser.setAvatar(newUser.getAvatar());
+
+        //userDao.save(actualUser);
+        return userDao.save(actualUser);
+    }
+
+    @Override
+    public void signUp(User newUser) throws UserAlreadyExistsException {
+        // Comprobar si existe una cuenta con las mismas credenciales
+        if (userDao.existsByNickName(newUser.getNickName()))
+            throw new UserAlreadyExistsException("Usuario '" + newUser.getNickName() + "' ya existe");
+
+        // Cifrar la contraseña recibida;
+        String cypheredPassword = passwordEncoder.encode(newUser.getPassword());
+        newUser.setPassword(cypheredPassword);
+
+        // Guardar el usuario en la BBDD
+        userDao.save(newUser);
+    }
+
+
+    @Transactional(readOnly = true)
+    @Override
+    public User login(String nickName, String password) throws IncorrectLoginException, NonExistentUserException {
+        // Buscar el usuario en la BBDD
+        Optional<User> user = userDao.findByNickName(nickName);
+        if (!user.isPresent())
+            throw new NonExistentUserException("Usuario '" + nickName + "' no encontrado");
+        User retrievedUser = user.get();
+
+        // Comprobar si contraseñas coinciden
+        if (!passwordEncoder.matches(password, retrievedUser.getPassword()))
+            throw new IncorrectLoginException("Contraseña incorrecta");
+
+        return retrievedUser;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public User loginFromId(Long userId) throws NonExistentUserException {
+        return permissionChecker.fetchUser(userId);
+    }
+
+    @Override
+    public void changePassword(Long userId, String oldPassword, String newPassword) throws NonExistentUserException, IncorrectLoginException {
+        // Buscar el usuario en la BBDD
+        User user = permissionChecker.fetchUser(userId);
+
+        // Comprobar si las contraseñas antiguas coinciden
+        if (!passwordEncoder.matches(oldPassword, user.getPassword()))
+            throw new IncorrectLoginException("Contraseñas antiguas no coinciden");
+
+        // Cifrar nueva contraseña y actualizarla en la cuenta
+        String newCypheredPassword = passwordEncoder.encode(newPassword);
+        user.setPassword(newCypheredPassword);
+        User updatedUser = userDao.save(user);
+    }
+
+
+    /* Más info: https://www.section.io/engineering-education/working-with-images-in-spring-boot/ */
+    @Transactional(readOnly = true)
+    @Override
+    public String getAvatar(Long userId) throws NonExistentUserException {
+        // Busca al usuario en la BD
+        User user = permissionChecker.fetchUser(userId);
+
+        return user.getAvatar();
+    }
+
+
+    /* Más info: https://www.section.io/engineering-education/working-with-images-in-spring-boot/ */
+    @Override
+    public void setAvatar(Long userId, MultipartFile imageFile) throws NonExistentUserException {
+        // Busca al usuario en la BD
+        User user = permissionChecker.fetchUser(userId);
+        byte [] imageBytes = null;
+        String b64EncodedImageString = null;
+
+        try {
+            // Obtiene los datos de la imagen
+            imageBytes = imageFile.getBytes();
+            b64EncodedImageString = Base64.getEncoder().encodeToString(imageBytes);
+
+        } catch (IOException io) {
+            System.out.println("Error procesando imagen");
+            System.out.println(io.getMessage());
+        }
+
+        // Guarda los datos de la imagen
+        user.setAvatar(b64EncodedImageString);
+        userDao.save(user);
+    }
+
+
+    @Override
+    public void deleteUser(Long userId) throws NonExistentUserException {
+        // Busca al usuario en la BD
+        User user = permissionChecker.fetchUser(userId);
+        userDao.removeById(userId);
+    }
+}

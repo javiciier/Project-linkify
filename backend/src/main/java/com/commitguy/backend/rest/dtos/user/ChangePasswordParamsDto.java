@@ -1,0 +1,29 @@
+package com.commitguy.backend.rest.dtos.user;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+public class ChangePasswordParamsDto {
+    private String oldPassword;
+    private String newPassword;
+
+    @NotNull
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
+    }
+
+    @NotNull
+    @Size(min=1, max=60)
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+}
